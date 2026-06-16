@@ -34,7 +34,7 @@ router.post("/chat", async (req, res) => {
 });
 
 /* =========================
-   QUIZ ROUTE (FIXED)
+   QUIZ ROUTE
 ========================= */
 router.post("/quiz", async (req, res) => {
   try {
