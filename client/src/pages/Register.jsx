@@ -25,7 +25,11 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.password) {
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.password.trim()
+    ) {
       setError("Please fill all fields");
       return;
     }
@@ -52,11 +56,10 @@ function Register() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-
     } catch (err) {
       setError(
         err.response?.data?.message ||
-        "Registration failed"
+          "Registration failed"
       );
     } finally {
       setLoading(false);
@@ -180,6 +183,8 @@ const styles = {
     outline: "none",
     fontSize: "14px",
     boxSizing: "border-box",
+    color: "#111827",
+    backgroundColor: "#ffffff",
   },
 
   button: {
@@ -196,12 +201,14 @@ const styles = {
     color: "#dc2626",
     fontSize: "14px",
     margin: 0,
+    textAlign: "center",
   },
 
   success: {
     color: "#16a34a",
     fontSize: "14px",
     margin: 0,
+    textAlign: "center",
   },
 
   linkText: {
