@@ -25,11 +25,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.password.trim()
-    ) {
+    if (!formData.name || !formData.email || !formData.password) {
       setError("Please fill all fields");
       return;
     }
@@ -39,28 +35,34 @@ function Register() {
       setError("");
       setSuccess("");
 
-      const res = await API.post(
-        "/api/auth/register",
-        formData
-      );
+      const res = await API.post("/api/auth/register", formData);
 
-      localStorage.setItem("token", res.data.token);
+      console.log("REGISTER RESPONSE:", res.data);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(res.data.user)
-      );
+      // SAFE STORAGE (only if exists)
+      if (res.data.user) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
+
+      // token only if backend sends it
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
 
       setSuccess("Registration successful! Redirecting...");
 
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/login"); // better than dashboard for register flow
       }, 1000);
+
     } catch (err) {
+      console.log("ERROR:", err.response || err);
+
       setError(
         err.response?.data?.message ||
-          "Registration failed"
+          "Server error. Check backend."
       );
+
     } finally {
       setLoading(false);
     }
@@ -102,13 +104,8 @@ function Register() {
           style={styles.input}
         />
 
-        {error && (
-          <p style={styles.error}>{error}</p>
-        )}
-
-        {success && (
-          <p style={styles.success}>{success}</p>
-        )}
+        {error && <p style={styles.error}>{error}</p>}
+        {success && <p style={styles.success}>{success}</p>}
 
         <button
           type="submit"
@@ -116,14 +113,10 @@ function Register() {
           style={{
             ...styles.button,
             opacity: loading ? 0.7 : 1,
-            cursor: loading
-              ? "not-allowed"
-              : "pointer",
+            cursor: loading ? "not-allowed" : "pointer",
           }}
         >
-          {loading
-            ? "Registering..."
-            : "Create Account"}
+          {loading ? "Registering..." : "Create Account"}
         </button>
 
         <p style={styles.linkText}>
@@ -143,8 +136,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background:
-      "linear-gradient(135deg, #dbeafe, #ede9fe)",
+    background: "linear-gradient(135deg, #dbeafe, #ede9fe)",
     fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
@@ -180,11 +172,9 @@ const styles = {
     padding: "14px",
     borderRadius: "10px",
     border: "1px solid #d1d5db",
-    outline: "none",
     fontSize: "14px",
-    boxSizing: "border-box",
-    color: "#111827",
-    backgroundColor: "#ffffff",
+    outline: "none",
+    backgroundColor: "#fff",
   },
 
   button: {
@@ -192,7 +182,7 @@ const styles = {
     borderRadius: "10px",
     border: "none",
     background: "#16a34a",
-    color: "#ffffff",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: "15px",
   },
@@ -200,14 +190,12 @@ const styles = {
   error: {
     color: "#dc2626",
     fontSize: "14px",
-    margin: 0,
     textAlign: "center",
   },
 
   success: {
     color: "#16a34a",
     fontSize: "14px",
-    margin: 0,
     textAlign: "center",
   },
 
@@ -215,7 +203,6 @@ const styles = {
     textAlign: "center",
     color: "#4b5563",
     fontSize: "14px",
-    marginTop: "10px",
   },
 
   link: {
