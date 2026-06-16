@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function FlashCards() {
   const [topic, setTopic] = useState("");
@@ -8,16 +8,18 @@ function FlashCards() {
   const [error, setError] = useState("");
 
   const generateCards = async () => {
-    if (!topic.trim()) return;
+    const trimmed = topic.trim();
+
+    if (!trimmed || loading) return;
 
     try {
       setLoading(true);
       setError("");
+      setCards("");
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/flashcards",
-        { topic }
-      );
+      const res = await API.post("/api/ai/flashcards", {
+        topic: trimmed,
+      });
 
       console.log("API RESPONSE:", res.data);
 
@@ -33,7 +35,11 @@ function FlashCards() {
       );
     } catch (err) {
       console.error(err);
-      setError("Failed to generate flashcards");
+
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate flashcards"
+      );
     } finally {
       setLoading(false);
     }
@@ -50,7 +56,6 @@ function FlashCards() {
     >
       <h1 style={{ marginBottom: "15px" }}>🧠 AI Flash Cards</h1>
 
-      {/* INPUT */}
       <input
         type="text"
         placeholder="Enter topic (e.g. React, Python, DBMS)"
@@ -66,7 +71,6 @@ function FlashCards() {
         }}
       />
 
-      {/* BUTTON */}
       <button
         onClick={generateCards}
         disabled={loading || !topic.trim()}
@@ -84,14 +88,12 @@ function FlashCards() {
         {loading ? "Generating..." : "🧠 Create Smart Flashcards"}
       </button>
 
-      {/* ERROR */}
       {error && (
         <p style={{ color: "red", marginTop: "10px" }}>
           {error}
         </p>
       )}
 
-      {/* OUTPUT */}
       <div
         style={{
           marginTop: "20px",

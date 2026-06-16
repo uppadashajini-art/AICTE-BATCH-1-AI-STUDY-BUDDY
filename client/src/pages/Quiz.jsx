@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function Quiz() {
   const [topic, setTopic] = useState("");
@@ -8,16 +8,18 @@ function Quiz() {
   const [error, setError] = useState("");
 
   const generateQuiz = async () => {
-    if (!topic.trim()) return;
+    const trimmedTopic = topic.trim();
+
+    if (!trimmedTopic || loading) return;
 
     try {
       setLoading(true);
       setError("");
+      setQuiz("");
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/quiz",
-        { topic }
-      );
+      const res = await API.post("/api/ai/quiz", {
+        topic: trimmedTopic,
+      });
 
       const data =
         res.data?.quiz ??
@@ -30,10 +32,21 @@ function Quiz() {
           : JSON.stringify(data, null, 2)
       );
     } catch (err) {
-      setError("Failed to generate quiz");
       console.error(err);
+
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate quiz"
+      );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      generateQuiz();
     }
   };
 
@@ -41,20 +54,21 @@ function Quiz() {
     <div style={styles.page}>
       <div style={styles.container}>
         <h1 style={styles.title}>🧠 AI Quiz Generator</h1>
+
         <p style={styles.subtitle}>
           Generate smart quizzes instantly
         </p>
 
-        {/* INPUT */}
         <input
           type="text"
           placeholder="Enter topic (React, DBMS, Python...)"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={loading}
           style={styles.input}
         />
 
-        {/* BUTTON */}
         <button
           onClick={generateQuiz}
           disabled={loading || !topic.trim()}
@@ -67,10 +81,8 @@ function Quiz() {
           {loading ? "Generating..." : "🚀 Generate Quiz"}
         </button>
 
-        {/* ERROR */}
         {error && <p style={styles.error}>{error}</p>}
 
-        {/* OUTPUT */}
         <div style={styles.output}>
           {loading
             ? "⏳ Creating your quiz..."
@@ -81,7 +93,6 @@ function Quiz() {
   );
 }
 
-/* 🎨 DARK DASHBOARD STYLE */
 const styles = {
   page: {
     minHeight: "100vh",
@@ -89,7 +100,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     background: "linear-gradient(135deg, #0f172a, #1e1b4b, #0b1020)",
-    fontFamily: "Arial",
+    fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
 
@@ -123,7 +134,8 @@ const styles = {
     outline: "none",
     fontSize: "15px",
     backgroundColor: "rgba(255,255,255,0.05)",
-    color: "white",
+    color: "#ffffff",
+    boxSizing: "border-box",
   },
 
   button: {
@@ -131,10 +143,9 @@ const styles = {
     borderRadius: "10px",
     border: "none",
     background: "#2563eb",
-    color: "white",
+    color: "#ffffff",
     fontWeight: "bold",
     fontSize: "15px",
-    transition: "0.2s",
   },
 
   output: {
@@ -142,7 +153,7 @@ const styles = {
     padding: "18px",
     borderRadius: "12px",
     background: "#ffffff",
-    color: "#111",
+    color: "#111827",
     minHeight: "160px",
     whiteSpace: "pre-wrap",
     fontSize: "14px",

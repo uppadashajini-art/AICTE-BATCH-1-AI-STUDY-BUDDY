@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function Quiz() {
   const [topic, setTopic] = useState("");
@@ -9,6 +9,7 @@ function Quiz() {
 
   const generateQuiz = async () => {
     const trimmed = topic.trim();
+
     if (!trimmed || loading) return;
 
     try {
@@ -16,10 +17,9 @@ function Quiz() {
       setError("");
       setQuiz("");
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/quiz",
-        { topic: trimmed }
-      );
+      const res = await API.post("/api/ai/quiz", {
+        topic: trimmed,
+      });
 
       const data = res.data?.quiz ?? res.data?.data ?? res.data;
 
@@ -32,7 +32,11 @@ function Quiz() {
       setTopic("");
     } catch (err) {
       console.error(err);
-      setError("Failed to generate quiz. Try again.");
+
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate quiz. Try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -54,13 +58,14 @@ function Quiz() {
         fontFamily: "Arial",
       }}
     >
-      <h1 style={{ marginBottom: "10px" }}>🧠 AI Quiz Generator</h1>
+      <h1 style={{ marginBottom: "10px" }}>
+        🧠 AI Quiz Generator
+      </h1>
 
       <p style={{ color: "#666", marginBottom: "20px" }}>
         Generate smart quizzes instantly
       </p>
 
-      {/* INPUT */}
       <input
         type="text"
         placeholder="Enter topic (React, DBMS, Python...)"
@@ -78,7 +83,6 @@ function Quiz() {
         }}
       />
 
-      {/* BUTTON */}
       <button
         onClick={generateQuiz}
         disabled={loading || !topic.trim()}
@@ -96,14 +100,14 @@ function Quiz() {
         {loading ? "Generating..." : "🚀 Generate Quiz"}
       </button>
 
-      {/* ERROR */}
       {error && (
-        <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
+        <p style={{ color: "red", marginTop: "10px" }}>
+          {error}
+        </p>
       )}
 
       <hr style={{ margin: "20px 0" }} />
 
-      {/* OUTPUT */}
       <h3>Quiz Output:</h3>
 
       <div
