@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 import API from "../services/api";
+
 function Register() {
   const navigate = useNavigate();
 
@@ -35,10 +35,10 @@ function Register() {
       setError("");
       setSuccess("");
 
-      const res = await axios.post(
-  "http://localhost:5000/api/auth/login",
-  formData
-);
+      const res = await API.post(
+        "/api/auth/register",
+        formData
+      );
 
       localStorage.setItem("token", res.data.token);
 
@@ -52,9 +52,11 @@ function Register() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-    } catch (error) {
+
+    } catch (err) {
       setError(
-        error.response?.data?.message || "Registration failed"
+        err.response?.data?.message ||
+        "Registration failed"
       );
     } finally {
       setLoading(false);
@@ -73,7 +75,7 @@ function Register() {
         <input
           type="text"
           name="name"
-          placeholder="Enter Name"
+          placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
           style={styles.input}
@@ -82,7 +84,7 @@ function Register() {
         <input
           type="email"
           name="email"
-          placeholder="Enter Email"
+          placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
           style={styles.input}
@@ -91,15 +93,19 @@ function Register() {
         <input
           type="password"
           name="password"
-          placeholder="Enter Password"
+          placeholder="Create Password"
           value={formData.password}
           onChange={handleChange}
           style={styles.input}
         />
 
-        {error && <p style={styles.error}>{error}</p>}
+        {error && (
+          <p style={styles.error}>{error}</p>
+        )}
 
-        {success && <p style={styles.success}>{success}</p>}
+        {success && (
+          <p style={styles.success}>{success}</p>
+        )}
 
         <button
           type="submit"
@@ -107,10 +113,14 @@ function Register() {
           style={{
             ...styles.button,
             opacity: loading ? 0.7 : 1,
-            cursor: loading ? "not-allowed" : "pointer",
+            cursor: loading
+              ? "not-allowed"
+              : "pointer",
           }}
         >
-          {loading ? "Registering..." : "Create Account"}
+          {loading
+            ? "Registering..."
+            : "Create Account"}
         </button>
 
         <p style={styles.linkText}>
@@ -130,7 +140,8 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "linear-gradient(135deg, #dbeafe, #ede9fe)",
+    background:
+      "linear-gradient(135deg, #dbeafe, #ede9fe)",
     fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
@@ -176,7 +187,7 @@ const styles = {
     borderRadius: "10px",
     border: "none",
     background: "#16a34a",
-    color: "#fff",
+    color: "#ffffff",
     fontWeight: "bold",
     fontSize: "15px",
   },
