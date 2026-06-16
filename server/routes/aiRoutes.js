@@ -3,7 +3,9 @@ import askAI from "../services/aiService.js";
 
 const router = express.Router();
 
-// Chat
+/* =========================
+   CHAT ROUTE
+========================= */
 router.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -22,7 +24,7 @@ router.post("/chat", async (req, res) => {
       reply,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Chat Error:", error);
 
     res.status(500).json({
       success: false,
@@ -31,7 +33,9 @@ router.post("/chat", async (req, res) => {
   }
 });
 
-// Generate Quiz
+/* =========================
+   QUIZ ROUTE (FIXED)
+========================= */
 router.post("/quiz", async (req, res) => {
   try {
     const { topic } = req.body;
@@ -44,18 +48,10 @@ router.post("/quiz", async (req, res) => {
     }
 
     const prompt = `
-Generate 5 multiple choice questions about ${topic}.
+Generate 5 multiple choice questions on ${topic}.
 
 Format:
-
-Question 1:
-A)
-B)
-C)
-D)
-Answer:
-
-Question 2:
+Question:
 A)
 B)
 C)
@@ -69,9 +65,8 @@ Answer:
       success: true,
       quiz,
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("Quiz Error:", error);
 
     res.status(500).json({
       success: false,
@@ -79,40 +74,60 @@ Answer:
     });
   }
 });
+
+/* =========================
+   FLASHCARDS ROUTE
+========================= */
 router.post("/flashcards", async (req, res) => {
   try {
     const { topic } = req.body;
+
+    if (!topic) {
+      return res.status(400).json({
+        success: false,
+        message: "Topic is required",
+      });
+    }
 
     const prompt = `
 Create 10 study flashcards about ${topic}.
 
 Format:
-
 Q: Question
 A: Answer
 
-Keep answers short and educational.
+Keep answers short and simple.
 `;
 
     const flashcards = await askAI(prompt);
 
     res.json({
       success: true,
-      flashcards
+      flashcards,
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("Flashcards Error:", error);
 
     res.status(500).json({
       success: false,
-      message: "Failed to generate flashcards"
+      message: "Failed to generate flashcards",
     });
   }
 });
+
+/* =========================
+   STUDY PLAN ROUTE
+========================= */
 router.post("/study-plan", async (req, res) => {
   try {
     const { subject, examDate, hoursPerDay } = req.body;
+
+    if (!subject || !examDate || !hoursPerDay) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
 
     const prompt = `
 Create a detailed study plan.
@@ -121,12 +136,11 @@ Subject: ${subject}
 Exam Date: ${examDate}
 Study Hours Per Day: ${hoursPerDay}
 
-Requirements:
+Include:
 - Day-wise schedule
-- Topics to cover each day
-- Revision days
-- Practice days
-- Easy to understand
+- Topics
+- Revision plan
+- Practice tests
 `;
 
     const plan = await askAI(prompt);
@@ -135,9 +149,8 @@ Requirements:
       success: true,
       plan,
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("Study Plan Error:", error);
 
     res.status(500).json({
       success: false,
@@ -145,4 +158,5 @@ Requirements:
     });
   }
 });
+
 export default router;
