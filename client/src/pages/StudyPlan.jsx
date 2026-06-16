@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function StudyPlan() {
   const [subject, setSubject] = useState("");
@@ -10,28 +10,48 @@ function StudyPlan() {
   const [error, setError] = useState("");
 
   const generatePlan = async () => {
-    if (!subject.trim() || !examDate || !hoursPerDay) return;
+    const sub = subject.trim();
+
+    if (!sub || !examDate || !hoursPerDay || loading) return;
 
     try {
       setLoading(true);
       setError("");
       setPlan("");
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/study-plan",
-        {
-          subject,
-          examDate,
-          hoursPerDay,
-        }
+      // ✅ FIXED: USING DEPLOYED BACKEND
+      const res = await API.post("/api/ai/study-plan", {
+        subject: sub,
+        examDate,
+        hoursPerDay,
+      });
+
+      const data = res.data?.plan ?? res.data;
+
+      setPlan(
+        typeof data === "string"
+          ? data
+          : JSON.stringify(data, null, 2)
       );
 
-      setPlan(res.data.plan || "No plan generated");
-    } catch (error) {
-      console.error(error);
-      setError("Failed to generate study plan");
+      setSubject("");
+      setExamDate("");
+      setHoursPerDay("");
+    } catch (err) {
+      console.error(err);
+
+      setError(
+        err.response?.data?.message ||
+          "Failed to generate study plan"
+      );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      generatePlan();
     }
   };
 
@@ -39,6 +59,7 @@ function StudyPlan() {
     <div style={styles.page}>
       <div style={styles.container}>
         <h1 style={styles.title}>📘 AI Study Planner</h1>
+
         <p style={styles.subtitle}>
           Create a smart personalized study schedule
         </p>
@@ -49,6 +70,7 @@ function StudyPlan() {
           placeholder="Enter Subject (e.g. DBMS, React)"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
+          onKeyDown={handleKeyDown}
           style={styles.input}
         />
 
@@ -96,7 +118,7 @@ function StudyPlan() {
   );
 }
 
-/* 🎨 SAME DARK DASHBOARD STYLE */
+/* 🎨 STYLES */
 const styles = {
   page: {
     minHeight: "100vh",
@@ -104,7 +126,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     background: "linear-gradient(135deg, #0f172a, #1e1b4b, #0b1020)",
-    fontFamily: "Arial",
+    fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
 
@@ -118,9 +140,9 @@ const styles = {
 
   title: {
     textAlign: "center",
-    color: "#ffffff",
-    margin: 0,
+    color: "#fff",
     fontSize: "28px",
+    margin: 0,
   },
 
   subtitle: {
@@ -138,7 +160,8 @@ const styles = {
     outline: "none",
     fontSize: "15px",
     backgroundColor: "rgba(255,255,255,0.05)",
-    color: "white",
+    color: "#fff",
+    boxSizing: "border-box",
   },
 
   button: {
@@ -146,7 +169,7 @@ const styles = {
     borderRadius: "10px",
     border: "none",
     background: "#2563eb",
-    color: "white",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: "15px",
   },
@@ -155,13 +178,12 @@ const styles = {
     marginTop: "10px",
     padding: "18px",
     borderRadius: "12px",
-    background: "#ffffff",
+    background: "#fff",
     color: "#111",
     minHeight: "160px",
     whiteSpace: "pre-wrap",
     fontSize: "14px",
     lineHeight: "1.6",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
   },
 
   error: {
