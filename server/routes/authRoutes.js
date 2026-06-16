@@ -7,7 +7,7 @@ import {
 const router = express.Router();
 
 router.get("/test", (req, res) => {
-  res.send("Auth route working");
+  res.send("Auth working");
 });
 
 router.post("/register", registerUser);
