@@ -16,8 +16,8 @@ function Quiz() {
       setError("");
       setQuiz("");
 
-      // ✅ FIXED API ENDPOINT
-      const res = await API.post("/api/quiz/generate", {
+      // ✅ FIXED ENDPOINT (IMPORTANT)
+      const res = await API.post("/api/ai/quiz", {
         topic: trimmedTopic,
       });
 
@@ -39,6 +39,12 @@ function Quiz() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      generateQuiz();
+    }
+  };
+
   return (
     <div style={styles.page}>
       <div style={styles.container}>
@@ -53,6 +59,7 @@ function Quiz() {
           placeholder="Enter topic (React, DBMS, Python...)"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
+          onKeyDown={handleKeyDown}
           disabled={loading}
           style={styles.input}
         />
@@ -60,7 +67,11 @@ function Quiz() {
         <button
           onClick={generateQuiz}
           disabled={loading || !topic.trim()}
-          style={styles.button}
+          style={{
+            ...styles.button,
+            opacity: loading ? 0.6 : 1,
+            cursor: loading ? "not-allowed" : "pointer",
+          }}
         >
           {loading ? "Generating..." : "🚀 Generate Quiz"}
         </button>
@@ -84,9 +95,10 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     background: "linear-gradient(135deg, #0f172a, #1e1b4b, #0b1020)",
-    fontFamily: "Arial",
+    fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
+
   container: {
     width: "100%",
     maxWidth: "720px",
@@ -94,40 +106,59 @@ const styles = {
     flexDirection: "column",
     gap: "14px",
   },
+
   title: {
     textAlign: "center",
-    color: "#fff",
+    color: "#ffffff",
+    margin: 0,
     fontSize: "28px",
   },
+
   subtitle: {
     textAlign: "center",
     color: "#94a3b8",
     fontSize: "14px",
+    marginTop: "-5px",
   },
+
   input: {
+    width: "100%",
     padding: "14px",
     borderRadius: "12px",
-    border: "1px solid #ccc",
+    border: "1px solid rgba(255,255,255,0.15)",
+    outline: "none",
     fontSize: "15px",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    color: "#ffffff",
+    boxSizing: "border-box",
   },
+
   button: {
     padding: "12px",
     borderRadius: "10px",
     border: "none",
     background: "#2563eb",
-    color: "#fff",
+    color: "#ffffff",
     fontWeight: "bold",
-    cursor: "pointer",
+    fontSize: "15px",
   },
+
   output: {
-    background: "#fff",
+    marginTop: "10px",
     padding: "18px",
     borderRadius: "12px",
+    background: "#ffffff",
+    color: "#111827",
     minHeight: "160px",
     whiteSpace: "pre-wrap",
+    fontSize: "14px",
+    lineHeight: "1.6",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
   },
+
   error: {
-    color: "red",
+    color: "#ff4d4d",
+    fontSize: "13px",
     textAlign: "center",
   },
 };
