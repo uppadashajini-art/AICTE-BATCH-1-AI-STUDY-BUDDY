@@ -9,7 +9,6 @@ function Quiz() {
 
   const generateQuiz = async () => {
     const trimmedTopic = topic.trim();
-
     if (!trimmedTopic || loading) return;
 
     try {
@@ -17,14 +16,12 @@ function Quiz() {
       setError("");
       setQuiz("");
 
-      const res = await API.post("/api/ai/quiz", {
+      // ✅ FIXED API ENDPOINT
+      const res = await API.post("/api/quiz/generate", {
         topic: trimmedTopic,
       });
 
-      const data =
-        res.data?.quiz ??
-        res.data?.data ??
-        res.data;
+      const data = res.data?.quiz || res.data?.data || res.data;
 
       setQuiz(
         typeof data === "string"
@@ -35,18 +32,10 @@ function Quiz() {
       console.error(err);
 
       setError(
-        err.response?.data?.message ||
-          "Failed to generate quiz"
+        err.response?.data?.message || "Failed to generate quiz"
       );
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      generateQuiz();
     }
   };
 
@@ -64,7 +53,6 @@ function Quiz() {
           placeholder="Enter topic (React, DBMS, Python...)"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          onKeyDown={handleKeyDown}
           disabled={loading}
           style={styles.input}
         />
@@ -72,11 +60,7 @@ function Quiz() {
         <button
           onClick={generateQuiz}
           disabled={loading || !topic.trim()}
-          style={{
-            ...styles.button,
-            opacity: loading ? 0.6 : 1,
-            cursor: loading ? "not-allowed" : "pointer",
-          }}
+          style={styles.button}
         >
           {loading ? "Generating..." : "🚀 Generate Quiz"}
         </button>
@@ -100,10 +84,9 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     background: "linear-gradient(135deg, #0f172a, #1e1b4b, #0b1020)",
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "Arial",
     padding: "20px",
   },
-
   container: {
     width: "100%",
     maxWidth: "720px",
@@ -111,59 +94,40 @@ const styles = {
     flexDirection: "column",
     gap: "14px",
   },
-
   title: {
     textAlign: "center",
-    color: "#ffffff",
-    margin: 0,
+    color: "#fff",
     fontSize: "28px",
   },
-
   subtitle: {
     textAlign: "center",
     color: "#94a3b8",
     fontSize: "14px",
-    marginTop: "-5px",
   },
-
   input: {
-    width: "100%",
     padding: "14px",
     borderRadius: "12px",
-    border: "1px solid rgba(255,255,255,0.15)",
-    outline: "none",
+    border: "1px solid #ccc",
     fontSize: "15px",
-    backgroundColor: "rgba(255,255,255,0.05)",
-    color: "#ffffff",
-    boxSizing: "border-box",
   },
-
   button: {
     padding: "12px",
     borderRadius: "10px",
     border: "none",
     background: "#2563eb",
-    color: "#ffffff",
+    color: "#fff",
     fontWeight: "bold",
-    fontSize: "15px",
+    cursor: "pointer",
   },
-
   output: {
-    marginTop: "10px",
+    background: "#fff",
     padding: "18px",
     borderRadius: "12px",
-    background: "#ffffff",
-    color: "#111827",
     minHeight: "160px",
     whiteSpace: "pre-wrap",
-    fontSize: "14px",
-    lineHeight: "1.6",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
   },
-
   error: {
-    color: "#ff4d4d",
-    fontSize: "13px",
+    color: "red",
     textAlign: "center",
   },
 };
