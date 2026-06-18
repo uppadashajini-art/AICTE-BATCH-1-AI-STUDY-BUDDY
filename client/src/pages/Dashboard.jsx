@@ -15,10 +15,10 @@ export default function Dashboard() {
 
   // ✅ LOGOUT FUNCTION (FIXED)
   const handleLogout = () => {
-    localStorage.removeItem("token"); // remove auth token
-    localStorage.removeItem("user");  // optional (if you store user)
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("user");  
 
-    navigate("/login"); // redirect to login page
+    navigate("/login");
   };
 
   const features = [
@@ -28,12 +28,7 @@ export default function Dashboard() {
       path: "/chat",
       description: "Get instant answers and AI-powered explanations.",
     },
-    {
-      title: "PDF Summarizer",
-      icon: <FileText size={32} />,
-      path: "/summarizer",
-      description: "Upload PDFs and get AI-powered summaries instantly.",
-    },
+  
     {
       title: "Generate Quiz",
       icon: <Brain size={32} />,
@@ -51,6 +46,12 @@ export default function Dashboard() {
       icon: <CalendarDays size={32} />,
       path: "/study-plan",
       description: "Build personalized study schedules.",
+    },
+     {
+      title: "PDF Summarizer",
+      icon: <FileText size={32} />,
+      path: "/summarizer",
+      description: "Upload PDFs and get AI-powered summaries instantly.",
     },
   ];
 
