@@ -8,9 +8,6 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
-  Zap,
-  Target,
-  TrendingUp,
 } from "lucide-react";
 
 export default function Home() {
@@ -49,19 +46,19 @@ export default function Home() {
 
   const benefits = [
     {
-      icon: <Zap size={26} />,
+      icon: <CheckCircle2 size={28} />,
       title: "Faster Learning",
       description:
         "Understand difficult concepts quickly with AI-powered explanations and summaries.",
     },
     {
-      icon: <Target size={26} />,
+      icon: <CheckCircle2 size={28} />,
       title: "Better Revision",
       description:
         "Strengthen your knowledge using quizzes, flashcards, and smart revision tools.",
     },
     {
-      icon: <TrendingUp size={26} />,
+      icon: <CheckCircle2 size={28} />,
       title: "Stay Organized",
       description:
         "Manage your learning and follow personalized study plans to stay on track.",
@@ -69,7 +66,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
+    <div className="min-h-screen bg-slate-950 text-white">
 
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
@@ -181,7 +178,7 @@ export default function Home() {
 
             <div className="flex items-center gap-2 text-slate-300">
               <CheckCircle2 size={18} className="text-cyan-400" />
-              PDF summarization
+              Easy to use
             </div>
 
           </div>
@@ -232,17 +229,6 @@ export default function Home() {
               <p className="text-slate-400 leading-relaxed">
                 {feature.description}
               </p>
-
-              {/* PDF-specific button */}
-              {feature.title === "PDF Summarizer" && (
-                <Link
-                  to="/summarizer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm text-cyan-400 font-semibold hover:text-cyan-300 transition"
-                >
-                  Try PDF Summarizer
-                  <ArrowRight size={16} />
-                </Link>
-              )}
 
             </div>
           ))}
