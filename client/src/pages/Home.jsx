@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import {
   MessageSquare,
   Brain,
@@ -12,25 +13,25 @@ import {
 export default function Home() {
   const features = [
     {
-      icon: <MessageSquare size={28} />,
+      icon: <MessageSquare size={26} />,
       title: "AI Chat",
       description:
         "Get instant answers, explanations, and personalized study help from your AI tutor.",
     },
     {
-      icon: <Brain size={28} />,
+      icon: <Brain size={26} />,
       title: "Quiz Generator",
       description:
         "Generate smart quizzes automatically and test your understanding of important concepts.",
     },
     {
-      icon: <BookOpen size={28} />,
+      icon: <BookOpen size={26} />,
       title: "Flashcards",
       description:
         "Revise important concepts quickly with simple and effective AI-generated flashcards.",
     },
     {
-      icon: <CalendarDays size={28} />,
+      icon: <CalendarDays size={26} />,
       title: "Study Plan",
       description:
         "Create personalized study schedules based on your subjects, exam dates, and available time.",
@@ -39,19 +40,19 @@ export default function Home() {
 
   const benefits = [
     {
-      icon: <Sparkles size={28} />,
+      icon: <Brain size={26} />,
       title: "Faster Learning",
       description:
         "Understand difficult concepts quickly with AI-powered explanations.",
     },
     {
-      icon: <Brain size={28} />,
+      icon: <BookOpen size={26} />,
       title: "Better Revision",
       description:
         "Strengthen your knowledge using quizzes, flashcards, and smart revision tools.",
     },
     {
-      icon: <CalendarDays size={28} />,
+      icon: <CalendarDays size={26} />,
       title: "Stay Organized",
       description:
         "Manage your learning and follow personalized study plans to stay on track.",
@@ -62,6 +63,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-950 text-white">
 
       {/* ================= NAVBAR ================= */}
+
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
@@ -102,7 +104,9 @@ export default function Home() {
         </div>
       </nav>
 
+
       {/* ================= HERO ================= */}
+
       <section className="relative overflow-hidden">
 
         {/* Background Glow */}
@@ -189,7 +193,9 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* ================= FEATURES ================= */}
+
       <section className="max-w-7xl mx-auto px-6 py-20">
 
         <div className="text-center mb-14">
@@ -210,7 +216,9 @@ export default function Home() {
 
         </div>
 
+
         {/* ONLY 4 FEATURE CARDS */}
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
           {features.map((feature, index) => (
@@ -241,7 +249,9 @@ export default function Home() {
 
       </section>
 
+
       {/* ================= BENEFITS ================= */}
+
       <section className="max-w-7xl mx-auto px-6 pb-20">
 
         <div className="relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12">
@@ -262,6 +272,7 @@ export default function Home() {
               </p>
 
             </div>
+
 
             <div className="grid md:grid-cols-3 gap-8">
 
@@ -292,11 +303,14 @@ export default function Home() {
             </div>
 
           </div>
+
         </div>
 
       </section>
 
+
       {/* ================= CTA ================= */}
+
       <section className="max-w-5xl mx-auto px-6 pb-20">
 
         <div className="relative overflow-hidden text-center rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 p-10 md:p-14">
@@ -332,12 +346,15 @@ export default function Home() {
 
       </section>
 
+
       {/* ================= FOOTER ================= */}
+
       <footer className="border-t border-white/10">
 
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
           <div className="flex items-center gap-2">
+
             <Sparkles
               size={18}
               className="text-cyan-400"
@@ -346,6 +363,7 @@ export default function Home() {
             <span className="font-semibold">
               AI Study Buddy
             </span>
+
           </div>
 
           <p className="text-sm text-slate-500">
