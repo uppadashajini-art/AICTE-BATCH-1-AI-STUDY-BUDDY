@@ -4,6 +4,7 @@ import {
   Brain,
   BookOpen,
   CalendarDays,
+  FileText,
   Sparkles,
   ArrowRight,
   CheckCircle2,
@@ -15,49 +16,55 @@ import {
 export default function Home() {
   const features = [
     {
-      icon: <MessageSquare size={30} />,
+      icon: <MessageSquare size={28} />,
       title: "AI Chat",
       description:
         "Get instant answers, explanations, and personalized study help from your AI tutor.",
     },
     {
-      icon: <Brain size={30} />,
+      icon: <Brain size={28} />,
       title: "Quiz Generator",
       description:
         "Generate smart quizzes automatically and test your understanding of important concepts.",
     },
     {
-      icon: <BookOpen size={30} />,
+      icon: <BookOpen size={28} />,
       title: "Flashcards",
       description:
         "Revise important concepts quickly with simple and effective AI-generated flashcards.",
     },
     {
-      icon: <CalendarDays size={30} />,
+      icon: <CalendarDays size={28} />,
       title: "Study Plan",
       description:
         "Create personalized study schedules based on your subjects, exam dates, and available time.",
+    },
+    {
+      icon: <FileText size={28} />,
+      title: "PDF Summarizer",
+      description:
+        "Upload your PDF study material and let AI convert lengthy content into clear, easy-to-understand summaries.",
     },
   ];
 
   const benefits = [
     {
-      icon: <Zap size={28} />,
+      icon: <Zap size={26} />,
       title: "Faster Learning",
       description:
-        "Understand difficult concepts quickly with AI-powered explanations.",
+        "Understand difficult concepts quickly with AI-powered explanations and summaries.",
     },
     {
-      icon: <Target size={28} />,
+      icon: <Target size={26} />,
       title: "Better Revision",
       description:
-        "Strengthen your knowledge using quizzes, flashcards, and smart revision.",
+        "Strengthen your knowledge using quizzes, flashcards, and smart revision tools.",
     },
     {
-      icon: <TrendingUp size={28} />,
+      icon: <TrendingUp size={26} />,
       title: "Stay Organized",
       description:
-        "Manage your learning and follow personalized study plans.",
+        "Manage your learning and follow personalized study plans to stay on track.",
     },
   ];
 
@@ -107,7 +114,7 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden">
 
-        {/* Background glow */}
+        {/* Background Glow */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
@@ -131,8 +138,8 @@ export default function Home() {
           {/* Description */}
           <p className="max-w-3xl mx-auto mt-7 text-lg md:text-xl text-slate-300 leading-relaxed">
             Your intelligent learning companion that helps you understand
-            concepts, practice effectively, organize your studies, and prepare
-            smarter with the power of AI.
+            concepts, practice effectively, summarize study materials,
+            organize your studies, and prepare smarter with AI.
           </p>
 
           {/* Buttons */}
@@ -159,7 +166,7 @@ export default function Home() {
 
           </div>
 
-          {/* Small stats */}
+          {/* Small Stats */}
           <div className="flex justify-center gap-10 mt-12 flex-wrap text-sm">
 
             <div className="flex items-center gap-2 text-slate-300">
@@ -174,7 +181,7 @@ export default function Home() {
 
             <div className="flex items-center gap-2 text-slate-300">
               <CheckCircle2 size={18} className="text-cyan-400" />
-              Easy to use
+              PDF summarization
             </div>
 
           </div>
@@ -196,14 +203,14 @@ export default function Home() {
           </h2>
 
           <p className="text-slate-400 max-w-2xl mx-auto mt-4">
-            One platform with AI-powered tools designed to make your learning
-            journey easier and more effective.
+            One platform with AI-powered tools designed to make your
+            learning journey easier, faster, and more effective.
           </p>
 
         </div>
 
         {/* Feature Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {features.map((feature, index) => (
             <div
@@ -226,15 +233,104 @@ export default function Home() {
                 {feature.description}
               </p>
 
-              {/* Arrow */}
-              <div className="mt-6 flex items-center gap-2 text-sm text-cyan-400 font-semibold opacity-0 group-hover:opacity-100 transition">
-                Explore tool
-                <ArrowRight size={16} />
-              </div>
+              {/* PDF-specific button */}
+              {feature.title === "PDF Summarizer" && (
+                <Link
+                  to="/summarizer"
+                  className="mt-6 inline-flex items-center gap-2 text-sm text-cyan-400 font-semibold hover:text-cyan-300 transition"
+                >
+                  Try PDF Summarizer
+                  <ArrowRight size={16} />
+                </Link>
+              )}
 
             </div>
           ))}
 
+        </div>
+      </section>
+
+      {/* ================= PDF SUMMARIZER HIGHLIGHT ================= */}
+      <section className="max-w-7xl mx-auto px-6 pb-20">
+
+        <div className="relative overflow-hidden rounded-3xl border border-red-400/20 bg-gradient-to-r from-red-500/10 via-purple-500/10 to-blue-500/10 p-8 md:p-12">
+
+          {/* Glow */}
+          <div className="absolute right-0 top-0 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
+
+          <div className="relative grid md:grid-cols-2 gap-10 items-center">
+
+            {/* Left */}
+            <div>
+
+              <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-400/20 flex items-center justify-center text-red-400 mb-6">
+                <FileText size={32} />
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Turn Long PDFs Into
+                <span className="text-cyan-400">
+                  {" "}Simple Notes
+                </span>
+              </h2>
+
+              <p className="text-slate-400 mt-5 leading-relaxed text-lg">
+                Don't spend hours reading lengthy study materials.
+                Upload your PDF and let AI analyze the content and
+                generate a clear, concise summary for you.
+              </p>
+
+              <Link
+                to="/summarizer"
+                className="inline-flex items-center gap-2 mt-7 px-6 py-3 rounded-xl bg-red-500 hover:bg-red-400 font-semibold transition shadow-lg shadow-red-500/20"
+              >
+                Summarize a PDF
+                <ArrowRight size={18} />
+              </Link>
+
+            </div>
+
+            {/* Right */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
+                  <FileText size={21} />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    Study Material.pdf
+                  </p>
+
+                  <p className="text-xs text-slate-500">
+                    AI PDF Analysis
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+
+                <div className="h-3 bg-white/10 rounded-full w-full"></div>
+                <div className="h-3 bg-white/10 rounded-full w-5/6"></div>
+                <div className="h-3 bg-white/10 rounded-full w-4/6"></div>
+
+                <div className="pt-4">
+                  <div className="flex items-center gap-2 text-cyan-400 text-sm font-semibold mb-3">
+                    <Sparkles size={16} />
+                    AI Generated Summary
+                  </div>
+
+                  <div className="bg-cyan-400/5 border border-cyan-400/10 rounded-xl p-4 text-sm text-slate-400 leading-relaxed">
+                    Important concepts, key points, and explanations
+                    extracted from your study material...
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -305,8 +401,8 @@ export default function Home() {
             </h2>
 
             <p className="text-slate-400 mt-4 max-w-xl mx-auto">
-              Create your account and start using AI-powered tools to improve
-              your learning today.
+              Create your account and start using AI-powered tools
+              to improve your learning today.
             </p>
 
             <Link
@@ -328,6 +424,7 @@ export default function Home() {
 
           <div className="flex items-center gap-2">
             <Sparkles size={18} className="text-cyan-400" />
+
             <span className="font-semibold">
               AI Study Buddy
             </span>
