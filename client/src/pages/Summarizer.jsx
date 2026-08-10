@@ -38,7 +38,7 @@ function Summarizer() {
       formData.append("pdf", file);
 
       const res = await axios.post(
-        "http://localhost:5000/api/summary/summarize",
+        "https://ai-study-buddy-api-j47c.onrender.com/api/summary/summarize",
         formData,
         {
           headers: {
