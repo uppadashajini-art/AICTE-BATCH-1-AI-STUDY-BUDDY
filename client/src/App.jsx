@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Summarizer from "./pages/Summarizer";
 import Chat from "./pages/Chat";
-import UploadNotes from "./pages/UploadNotes";
 import Quiz from "./pages/Quiz";
 import FlashCards from "./pages/FlashCards";
 import StudyPlan from "./pages/StudyPlan";
@@ -21,7 +20,6 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/summarizer" element={<Summarizer />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/upload" element={<UploadNotes />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/flashcards" element={<FlashCards />} />
         <Route path="/study-plan" element={<StudyPlan />} />
