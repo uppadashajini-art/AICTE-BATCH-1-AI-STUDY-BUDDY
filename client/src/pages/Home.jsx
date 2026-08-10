@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {
   MessageSquare,
-  FileText,
   Brain,
   BookOpen,
   CalendarDays,
@@ -20,12 +19,6 @@ export default function Home() {
       title: "AI Chat",
       description:
         "Get instant answers, explanations, and personalized study help from your AI tutor.",
-    },
-    {
-      icon: <FileText size={30} />,
-      title: "Upload Notes",
-      description:
-        "Upload your PDF notes and turn your study material into useful AI-powered resources.",
     },
     {
       icon: <Brain size={30} />,
@@ -64,15 +57,17 @@ export default function Home() {
       icon: <TrendingUp size={28} />,
       title: "Stay Organized",
       description:
-        "Manage your learning resources and follow personalized study plans.",
+        "Manage your learning and follow personalized study plans.",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
+
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
@@ -80,7 +75,10 @@ export default function Home() {
             </div>
 
             <div>
-              <h1 className="text-xl font-bold">AI Study Buddy</h1>
+              <h1 className="text-xl font-bold">
+                AI Study Buddy
+              </h1>
+
               <p className="text-xs text-slate-400">
                 Learn Smarter with AI
               </p>
@@ -108,10 +106,12 @@ export default function Home() {
 
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden">
+
         {/* Background glow */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-sm font-medium mb-7">
             <Sparkles size={16} />
@@ -137,11 +137,13 @@ export default function Home() {
 
           {/* Buttons */}
           <div className="flex justify-center gap-4 flex-wrap mt-10">
+
             <Link
               to="/register"
               className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 font-bold text-lg transition shadow-xl shadow-blue-600/20"
             >
               Start Learning
+
               <ArrowRight
                 size={20}
                 className="group-hover:translate-x-1 transition"
@@ -154,10 +156,12 @@ export default function Home() {
             >
               Login
             </Link>
+
           </div>
 
           {/* Small stats */}
           <div className="flex justify-center gap-10 mt-12 flex-wrap text-sm">
+
             <div className="flex items-center gap-2 text-slate-300">
               <CheckCircle2 size={18} className="text-cyan-400" />
               AI-powered tools
@@ -172,13 +176,16 @@ export default function Home() {
               <CheckCircle2 size={18} className="text-cyan-400" />
               Easy to use
             </div>
+
           </div>
         </div>
       </section>
 
       {/* ================= FEATURES ================= */}
       <section className="max-w-7xl mx-auto px-6 py-20">
+
         <div className="text-center mb-14">
+
           <div className="inline-flex items-center gap-2 text-cyan-400 text-sm font-semibold mb-3">
             <Sparkles size={17} />
             POWERFUL STUDY TOOLS
@@ -192,24 +199,29 @@ export default function Home() {
             One platform with AI-powered tools designed to make your learning
             journey easier and more effective.
           </p>
+
         </div>
 
         {/* Feature Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
           {features.map((feature, index) => (
             <div
               key={index}
               className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-cyan-400/20 hover:-translate-y-1 transition-all duration-300"
             >
+
               {/* Icon */}
               <div className="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition">
                 {feature.icon}
               </div>
 
+              {/* Title */}
               <h3 className="text-xl font-bold mb-3">
                 {feature.title}
               </h3>
 
+              {/* Description */}
               <p className="text-slate-400 leading-relaxed">
                 {feature.description}
               </p>
@@ -219,19 +231,24 @@ export default function Home() {
                 Explore tool
                 <ArrowRight size={16} />
               </div>
+
             </div>
           ))}
+
         </div>
       </section>
 
-      {/* ================= HOW IT HELPS ================= */}
+      {/* ================= BENEFITS ================= */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
+
         <div className="relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12">
-          {/* Glow */}
+
           <div className="absolute right-0 top-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
 
           <div className="relative">
+
             <div className="text-center mb-12">
+
               <h2 className="text-4xl md:text-5xl font-bold">
                 Why Choose AI Study Buddy?
               </h2>
@@ -239,14 +256,17 @@ export default function Home() {
               <p className="text-slate-400 mt-4">
                 Make every study session more productive.
               </p>
+
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
+
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
                   className="text-center"
                 >
+
                   <div className="mx-auto w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 mb-5">
                     {benefit.icon}
                   </div>
@@ -258,8 +278,10 @@ export default function Home() {
                   <p className="text-slate-400 leading-relaxed">
                     {benefit.description}
                   </p>
+
                 </div>
               ))}
+
             </div>
           </div>
         </div>
@@ -267,11 +289,16 @@ export default function Home() {
 
       {/* ================= CTA ================= */}
       <section className="max-w-5xl mx-auto px-6 pb-20">
+
         <div className="relative overflow-hidden text-center rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 p-10 md:p-14">
+
           <div className="absolute inset-0 bg-blue-500/5 blur-3xl"></div>
 
           <div className="relative">
-            <div className="text-4xl mb-5">🚀</div>
+
+            <div className="text-4xl mb-5">
+              🚀
+            </div>
 
             <h2 className="text-3xl md:text-4xl font-bold">
               Ready to Study Smarter?
@@ -289,23 +316,30 @@ export default function Home() {
               Create Free Account
               <ArrowRight size={19} />
             </Link>
+
           </div>
         </div>
       </section>
 
       {/* ================= FOOTER ================= */}
       <footer className="border-t border-white/10">
+
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+
           <div className="flex items-center gap-2">
             <Sparkles size={18} className="text-cyan-400" />
-            <span className="font-semibold">AI Study Buddy</span>
+            <span className="font-semibold">
+              AI Study Buddy
+            </span>
           </div>
 
           <p className="text-sm text-slate-500">
             © 2026 AI Study Buddy • Learn Smarter with AI
           </p>
+
         </div>
       </footer>
+
     </div>
   );
 }
