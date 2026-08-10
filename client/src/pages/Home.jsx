@@ -8,6 +8,9 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
+  Zap,
+  Target,
+  TrendingUp,
 } from "lucide-react";
 
 export default function Home() {
@@ -46,19 +49,19 @@ export default function Home() {
 
   const benefits = [
     {
-      icon: <CheckCircle2 size={28} />,
+      icon: <Zap size={28} />,
       title: "Faster Learning",
       description:
         "Understand difficult concepts quickly with AI-powered explanations and summaries.",
     },
     {
-      icon: <CheckCircle2 size={28} />,
+      icon: <Target size={28} />,
       title: "Better Revision",
       description:
         "Strengthen your knowledge using quizzes, flashcards, and smart revision tools.",
     },
     {
-      icon: <CheckCircle2 size={28} />,
+      icon: <TrendingUp size={28} />,
       title: "Stay Organized",
       description:
         "Manage your learning and follow personalized study plans to stay on track.",
@@ -68,8 +71,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
 
-      {/* ================= NAVBAR ================= */}
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+      {/* =====================================================
+          NAVBAR
+      ===================================================== */}
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
           {/* Logo */}
@@ -91,6 +96,7 @@ export default function Home() {
 
           {/* Navigation */}
           <div className="flex items-center gap-3">
+
             <Link
               to="/login"
               className="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/10 transition"
@@ -104,15 +110,21 @@ export default function Home() {
             >
               Get Started
             </Link>
+
           </div>
         </div>
       </nav>
 
-      {/* ================= HERO ================= */}
+
+      {/* =====================================================
+          HERO SECTION
+      ===================================================== */}
       <section className="relative overflow-hidden">
 
         {/* Background Glow */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="absolute left-0 top-40 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
 
@@ -122,14 +134,17 @@ export default function Home() {
             AI-Powered Learning Platform
           </div>
 
-          {/* Heading */}
+          {/* Main Heading */}
           <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+
             Study Smarter.
+
             <br />
 
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
               Learn Faster.
             </span>
+
           </h2>
 
           {/* Description */}
@@ -163,31 +178,46 @@ export default function Home() {
 
           </div>
 
+
           {/* Small Stats */}
           <div className="flex justify-center gap-10 mt-12 flex-wrap text-sm">
 
             <div className="flex items-center gap-2 text-slate-300">
-              <CheckCircle2 size={18} className="text-cyan-400" />
+              <CheckCircle2
+                size={18}
+                className="text-cyan-400"
+              />
               AI-powered tools
             </div>
 
             <div className="flex items-center gap-2 text-slate-300">
-              <CheckCircle2 size={18} className="text-cyan-400" />
+              <CheckCircle2
+                size={18}
+                className="text-cyan-400"
+              />
               Personalized learning
             </div>
 
             <div className="flex items-center gap-2 text-slate-300">
-              <CheckCircle2 size={18} className="text-cyan-400" />
+              <CheckCircle2
+                size={18}
+                className="text-cyan-400"
+              />
               Easy to use
             </div>
 
           </div>
+
         </div>
       </section>
 
-      {/* ================= FEATURES ================= */}
+
+      {/* =====================================================
+          FEATURES SECTION
+      ===================================================== */}
       <section className="max-w-7xl mx-auto px-6 py-20">
 
+        {/* Section Heading */}
         <div className="text-center mb-14">
 
           <div className="inline-flex items-center gap-2 text-cyan-400 text-sm font-semibold mb-3">
@@ -200,51 +230,132 @@ export default function Home() {
           </h2>
 
           <p className="text-slate-400 max-w-2xl mx-auto mt-4">
-            One platform with AI-powered tools designed to make your
-            learning journey easier, faster, and more effective.
+            One platform with AI-powered tools designed to make
+            your learning journey easier, faster, and more effective.
           </p>
 
         </div>
+
 
         {/* Feature Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {features.map((feature, index) => (
+
             <div
               key={index}
-              className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-cyan-400/20 hover:-translate-y-1 transition-all duration-300"
+              className="
+                group
+                relative
+                bg-white/5
+                backdrop-blur-xl
+                border
+                border-white/10
+                rounded-3xl
+                p-7
+                hover:bg-white/10
+                hover:border-cyan-400/20
+                hover:-translate-y-1
+                transition-all
+                duration-300
+              "
             >
 
               {/* Icon */}
-              <div className="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition">
+              <div
+                className="
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-cyan-400/10
+                  border
+                  border-cyan-400/20
+                  flex
+                  items-center
+                  justify-center
+                  text-cyan-400
+                  mb-6
+                  group-hover:scale-110
+                  transition
+                "
+              >
                 {feature.icon}
               </div>
+
 
               {/* Title */}
               <h3 className="text-xl font-bold mb-3">
                 {feature.title}
               </h3>
 
+
               {/* Description */}
               <p className="text-slate-400 leading-relaxed">
                 {feature.description}
               </p>
 
+
+              {/* Normal Card Footer */}
+              <div
+                className="
+                  mt-6
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-slate-500
+                  group-hover:text-cyan-400
+                  transition
+                "
+              >
+                <span>AI-powered tool</span>
+
+                <ArrowRight
+                  size={15}
+                  className="
+                    opacity-0
+                    -translate-x-2
+                    group-hover:opacity-100
+                    group-hover:translate-x-0
+                    transition-all
+                  "
+                />
+              </div>
+
             </div>
+
           ))}
 
         </div>
+
       </section>
 
-      {/* ================= BENEFITS ================= */}
+
+      {/* =====================================================
+          BENEFITS SECTION
+      ===================================================== */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
 
-        <div className="relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12">
+        <div
+          className="
+            relative
+            overflow-hidden
+            bg-white/5
+            backdrop-blur-xl
+            border
+            border-white/10
+            rounded-3xl
+            p-8
+            md:p-12
+          "
+        >
 
-          <div className="absolute right-0 top-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
+          {/* Background Glow */}
+          <div className="absolute right-0 top-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl" />
 
           <div className="relative">
 
+            {/* Heading */}
             <div className="text-center mb-12">
 
               <h2 className="text-4xl md:text-5xl font-bold">
@@ -257,86 +368,182 @@ export default function Home() {
 
             </div>
 
+
+            {/* Benefits */}
             <div className="grid md:grid-cols-3 gap-8">
 
               {benefits.map((benefit, index) => (
+
                 <div
                   key={index}
                   className="text-center"
                 >
 
-                  <div className="mx-auto w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 mb-5">
+                  {/* Icon */}
+                  <div
+                    className="
+                      mx-auto
+                      w-14
+                      h-14
+                      rounded-2xl
+                      bg-blue-500/10
+                      border
+                      border-blue-400/20
+                      flex
+                      items-center
+                      justify-center
+                      text-blue-400
+                      mb-5
+                    "
+                  >
                     {benefit.icon}
                   </div>
 
+
+                  {/* Title */}
                   <h3 className="text-xl font-bold mb-3">
                     {benefit.title}
                   </h3>
 
+
+                  {/* Description */}
                   <p className="text-slate-400 leading-relaxed">
                     {benefit.description}
                   </p>
 
                 </div>
+
               ))}
 
             </div>
+
           </div>
+
         </div>
+
       </section>
 
-      {/* ================= CTA ================= */}
+
+      {/* =====================================================
+          CTA SECTION
+      ===================================================== */}
       <section className="max-w-5xl mx-auto px-6 pb-20">
 
-        <div className="relative overflow-hidden text-center rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 p-10 md:p-14">
+        <div
+          className="
+            relative
+            overflow-hidden
+            text-center
+            rounded-3xl
+            border
+            border-cyan-400/20
+            bg-gradient-to-r
+            from-cyan-500/10
+            via-blue-500/10
+            to-purple-500/10
+            p-10
+            md:p-14
+          "
+        >
 
-          <div className="absolute inset-0 bg-blue-500/5 blur-3xl"></div>
+          {/* Glow */}
+          <div className="absolute inset-0 bg-blue-500/5 blur-3xl" />
 
           <div className="relative">
 
+            {/* Icon */}
             <div className="text-4xl mb-5">
               🚀
             </div>
 
+
+            {/* Heading */}
             <h2 className="text-3xl md:text-4xl font-bold">
               Ready to Study Smarter?
             </h2>
 
+
+            {/* Description */}
             <p className="text-slate-400 mt-4 max-w-xl mx-auto">
               Create your account and start using AI-powered tools
               to improve your learning today.
             </p>
 
+
+            {/* Button */}
             <Link
               to="/register"
-              className="inline-flex items-center gap-2 mt-8 px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 font-bold transition shadow-lg shadow-blue-600/20"
+              className="
+                inline-flex
+                items-center
+                gap-2
+                mt-8
+                px-8
+                py-4
+                rounded-xl
+                bg-blue-600
+                hover:bg-blue-500
+                font-bold
+                transition
+                shadow-lg
+                shadow-blue-600/20
+              "
             >
               Create Free Account
+
               <ArrowRight size={19} />
+
             </Link>
 
           </div>
+
         </div>
+
       </section>
 
-      {/* ================= FOOTER ================= */}
+
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
       <footer className="border-t border-white/10">
 
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div
+          className="
+            max-w-7xl
+            mx-auto
+            px-6
+            py-8
+            flex
+            flex-col
+            md:flex-row
+            items-center
+            justify-between
+            gap-4
+          "
+        >
 
+          {/* Footer Logo */}
           <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-cyan-400" />
+
+            <Sparkles
+              size={18}
+              className="text-cyan-400"
+            />
 
             <span className="font-semibold">
               AI Study Buddy
             </span>
+
           </div>
 
+
+          {/* Copyright */}
           <p className="text-sm text-slate-500">
             © 2026 AI Study Buddy • Learn Smarter with AI
           </p>
 
         </div>
+
       </footer>
 
     </div>
