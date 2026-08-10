@@ -309,20 +309,6 @@ export default function Home() {
 
               </p>
 
-
-              {/* PDF Summarizer Link */}
-
-              {feature.title === "PDF Summarizer" && (
-
-                <Link
-                  to="/summarizer"
-                  className="inline-block mt-5 text-cyan-400 hover:text-cyan-300 font-semibold transition"
-                >
-                  Summarize PDF
-                </Link>
-
-              )}
-
             </div>
 
           ))}
