@@ -5,6 +5,7 @@ import {
   Brain,
   BookOpen,
   CalendarDays,
+  FileText,
   Sparkles,
   ArrowRight,
   CheckCircle2,
@@ -35,6 +36,12 @@ export default function Home() {
       title: "Study Plan",
       description:
         "Create personalized study schedules based on your subjects, exam dates, and available time.",
+    },
+    {
+      icon: <FileText size={26} />,
+      title: "PDF Summarizer",
+      description:
+        "Upload your study PDF and let AI generate a clear, concise summary of the important concepts.",
     },
   ];
 
@@ -217,7 +224,7 @@ export default function Home() {
         </div>
 
 
-        {/* ONLY 4 FEATURE CARDS */}
+        {/* ================= 5 FEATURE CARDS ================= */}
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
@@ -241,6 +248,17 @@ export default function Home() {
               <p className="text-slate-400 leading-relaxed">
                 {feature.description}
               </p>
+
+              {/* PDF Summarizer Button */}
+              {feature.title === "PDF Summarizer" && (
+                <Link
+                  to="/summarizer"
+                  className="inline-flex items-center gap-2 mt-5 text-cyan-400 hover:text-cyan-300 font-semibold transition"
+                >
+                  Summarize PDF
+                  <ArrowRight size={17} />
+                </Link>
+              )}
 
             </div>
           ))}
