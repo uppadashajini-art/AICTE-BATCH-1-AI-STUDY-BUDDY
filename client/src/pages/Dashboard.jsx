@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-
 import {
   MessageSquare,
   Brain,
@@ -9,433 +8,199 @@ import {
   Flame,
   Trophy,
   FileText,
-  ArrowRight,
-  Sparkles,
-  Target,
-  Upload,
 } from "lucide-react";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  /* =========================
-     LOGOUT
-  ========================= */
-
+  // Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     navigate("/login");
   };
 
-  /* =========================
-     STUDY TOOLS
-  ========================= */
-
+  // Study tools
   const features = [
     {
       title: "AI Chat",
-      icon: <MessageSquare size={30} />,
+      icon: <MessageSquare size={32} />,
       path: "/chat",
       description:
         "Ask questions and get instant AI-powered explanations for any topic.",
-      iconBg: "bg-cyan-500/15",
-      iconColor: "text-cyan-400",
     },
-
     {
       title: "Generate Quiz",
-      icon: <Brain size={30} />,
+      icon: <Brain size={32} />,
       path: "/quiz",
       description:
         "Test your knowledge with AI-generated multiple-choice quizzes.",
-      iconBg: "bg-purple-500/15",
-      iconColor: "text-purple-400",
     },
-
     {
       title: "Flashcards",
-      icon: <BookOpen size={30} />,
+      icon: <BookOpen size={32} />,
       path: "/flashcards",
       description:
         "Create smart flashcards and revise important concepts quickly.",
-      iconBg: "bg-blue-500/15",
-      iconColor: "text-blue-400",
     },
-
     {
       title: "Study Plan",
-      icon: <CalendarDays size={30} />,
+      icon: <CalendarDays size={32} />,
       path: "/study-plan",
       description:
         "Create a personalized study schedule based on your exam date.",
-      iconBg: "bg-green-500/15",
-      iconColor: "text-green-400",
     },
-
     {
       title: "PDF Summarizer",
-      icon: <FileText size={30} />,
+      icon: <FileText size={32} />,
       path: "/summarizer",
       description:
         "Upload your PDF and turn lengthy study material into simple notes.",
-      iconBg: "bg-red-500/15",
-      iconColor: "text-red-400",
-    },
-
-    {
-      title: "Upload Notes",
-      icon: <Upload size={30} />,
-      path: "/upload-notes",
-      description:
-        "Upload your study material and generate useful AI-powered notes.",
-      iconBg: "bg-yellow-500/15",
-      iconColor: "text-yellow-400",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
 
-      {/* =========================
-          NAVBAR
-      ========================= */}
+      {/* ================= NAVBAR ================= */}
+      <nav className="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
 
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-          {/* LOGO */}
-
-          <Link
-            to="/dashboard"
-            className="flex items-center gap-3 group"
-          >
-            <div
-              className="
-                w-11 h-11
-                rounded-xl
-                bg-gradient-to-br
-                from-cyan-400
-                to-blue-600
-                flex
-                items-center
-                justify-center
-                shadow-lg
-                shadow-cyan-500/20
-                group-hover:scale-105
-                transition
-              "
-            >
-              🎓
+          {/* Logo */}
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+              <span className="text-2xl">🎓</span>
             </div>
 
             <div>
-              <h1 className="text-xl md:text-2xl font-bold">
+              <h1 className="text-2xl font-bold">
                 AI Study Buddy
               </h1>
 
-              <p className="text-xs text-slate-400 hidden sm:block">
+              <p className="text-sm text-slate-400">
                 Learn smarter. Study better.
               </p>
             </div>
-          </Link>
+          </div>
 
-          {/* LOGOUT */}
-
+          {/* Logout */}
           <button
             onClick={handleLogout}
             className="
-              flex
-              items-center
-              gap-2
-              px-4
-              py-2.5
+              flex items-center gap-2
+              px-5 py-2.5
               rounded-xl
+              border border-red-400/20
               bg-red-500/10
-              border
-              border-red-400/20
               text-red-400
               hover:bg-red-500
               hover:text-white
               transition-all
               duration-300
-              font-semibold
             "
           >
             <LogOut size={18} />
-
-            <span className="hidden sm:block">
-              Logout
-            </span>
+            Logout
           </button>
-
         </div>
       </nav>
 
+      {/* ================= MAIN ================= */}
+      <main className="max-w-6xl mx-auto px-6 py-10">
 
-      {/* =========================
-          MAIN
-      ========================= */}
-
-      <main className="max-w-7xl mx-auto px-5 md:px-6 py-8 md:py-12">
-
-        {/* =========================
-            WELCOME HERO
-        ========================= */}
-
+        {/* Welcome */}
         <section
           className="
-            relative
-            overflow-hidden
+            mb-10
             rounded-3xl
-            border
-            border-white/10
+            border border-white/10
             bg-white/[0.06]
             backdrop-blur-xl
-            p-6
-            md:p-10
-            mb-10
+            p-8
+            shadow-2xl
           "
         >
+          <h2 className="text-4xl font-bold">
+            Welcome Back 👋
+          </h2>
 
-          {/* Background Glow */}
+          <p className="text-slate-300 mt-3 text-lg max-w-3xl">
+            Continue your learning journey with AI-powered tools
+            designed to help you study smarter and stay organized.
+          </p>
 
-          <div
-            className="
-              absolute
-              -top-24
-              -right-24
-              w-72
-              h-72
-              bg-cyan-500/10
-              rounded-full
-              blur-3xl
-            "
-          />
+          {/* Stats */}
+          <div className="flex flex-wrap gap-4 mt-7">
 
-          <div
-            className="
-              absolute
-              -bottom-32
-              -left-20
-              w-72
-              h-72
-              bg-purple-500/10
-              rounded-full
-              blur-3xl
-            "
-          />
-
-          <div className="relative z-10">
-
-            {/* Badge */}
-
+            {/* Streak */}
             <div
               className="
-                inline-flex
-                items-center
-                gap-2
-                px-3
-                py-1.5
-                rounded-full
-                bg-cyan-400/10
-                border
-                border-cyan-400/20
-                text-cyan-300
-                text-xs
-                font-semibold
-                mb-5
+                flex items-center gap-3
+                px-5 py-3
+                rounded-2xl
+                bg-orange-500/10
+                border border-orange-400/20
               "
             >
-              <Sparkles size={14} />
+              <Flame className="text-orange-400" size={22} />
 
-              AI-Powered Learning
+              <div>
+                <p className="text-sm text-slate-400">
+                  Study Streak
+                </p>
+
+                <p className="font-bold">
+                  7 Days
+                </p>
+              </div>
             </div>
 
+            {/* XP */}
+            <div
+              className="
+                flex items-center gap-3
+                px-5 py-3
+                rounded-2xl
+                bg-yellow-500/10
+                border border-yellow-400/20
+              "
+            >
+              <Trophy className="text-yellow-400" size={22} />
 
-            {/* Heading */}
+              <div>
+                <p className="text-sm text-slate-400">
+                  XP Earned
+                </p>
 
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-              Welcome Back 👋
-            </h2>
-
-            <p className="mt-4 max-w-2xl text-slate-300 text-base md:text-lg leading-relaxed">
-              Continue your learning journey with AI-powered
-              tools designed to help you study smarter,
-              revise faster, and stay organized.
-            </p>
-
-
-            {/* STATS */}
-
-            <div className="flex flex-wrap gap-4 mt-7">
-
-              {/* Streak */}
-
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  rounded-2xl
-                  bg-orange-500/10
-                  border
-                  border-orange-400/20
-                "
-              >
-                <div
-                  className="
-                    w-9
-                    h-9
-                    rounded-xl
-                    bg-orange-500/15
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <Flame
-                    size={20}
-                    className="text-orange-400"
-                  />
-                </div>
-
-                <div>
-                  <p className="text-xs text-slate-400">
-                    Current Streak
-                  </p>
-
-                  <p className="font-bold">
-                    7 Days 🔥
-                  </p>
-                </div>
+                <p className="font-bold">
+                  250 XP
+                </p>
               </div>
-
-
-              {/* XP */}
-
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  rounded-2xl
-                  bg-yellow-500/10
-                  border
-                  border-yellow-400/20
-                "
-              >
-                <div
-                  className="
-                    w-9
-                    h-9
-                    rounded-xl
-                    bg-yellow-500/15
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <Trophy
-                    size={20}
-                    className="text-yellow-400"
-                  />
-                </div>
-
-                <div>
-                  <p className="text-xs text-slate-400">
-                    Total XP
-                  </p>
-
-                  <p className="font-bold">
-                    250 XP
-                  </p>
-                </div>
-              </div>
-
-
-              {/* Tasks */}
-
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  rounded-2xl
-                  bg-cyan-500/10
-                  border
-                  border-cyan-400/20
-                "
-              >
-                <div
-                  className="
-                    w-9
-                    h-9
-                    rounded-xl
-                    bg-cyan-500/15
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <Target
-                    size={20}
-                    className="text-cyan-400"
-                  />
-                </div>
-
-                <div>
-                  <p className="text-xs text-slate-400">
-                    Today's Tasks
-                  </p>
-
-                  <p className="font-bold">
-                    4 / 5 Complete
-                  </p>
-                </div>
-              </div>
-
             </div>
 
           </div>
         </section>
 
-
-        {/* =========================
-            STUDY TOOLS
-        ========================= */}
-
+        {/* ================= STUDY TOOLS ================= */}
         <section>
 
-          <div className="flex items-end justify-between mb-7">
+          <div className="mb-7">
+            <h3 className="text-3xl font-bold">
+              Study Tools
+            </h3>
 
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold">
-                Study Tools
-              </h3>
-
-              <p className="text-slate-400 mt-2">
-                Everything you need to study smarter.
-              </p>
-            </div>
-
+            <p className="text-slate-400 mt-2">
+              Everything you need to study smarter.
+            </p>
           </div>
 
-
-          {/* TOOL GRID */}
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* IMPORTANT:
+              There are ONLY 5 cards here.
+              Upload Notes has been completely removed.
+          */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             {features.map((item, index) => (
-
               <Link
                 key={index}
                 to={item.path}
@@ -444,231 +209,144 @@ export default function Dashboard() {
                   relative
                   overflow-hidden
                   rounded-3xl
-                  border
-                  border-white/10
-                  bg-white/[0.06]
+                  border border-white/10
+                  bg-white/[0.07]
                   backdrop-blur-xl
-                  p-6
+                  p-7
+                  min-h-[270px]
+                  flex flex-col
+                  hover:bg-white/[0.11]
+                  hover:border-cyan-400/30
+                  hover:-translate-y-2
                   transition-all
                   duration-300
-                  hover:-translate-y-2
-                  hover:bg-white/[0.09]
-                  hover:border-white/20
-                  hover:shadow-2xl
+                  shadow-xl
                 "
               >
 
-                {/* Top Glow */}
-
+                {/* Glow */}
                 <div
                   className="
                     absolute
-                    -top-16
-                    -right-16
-                    w-32
-                    h-32
-                    bg-cyan-400/5
+                    -top-20
+                    -right-20
+                    w-40
+                    h-40
+                    bg-cyan-500/10
                     rounded-full
-                    blur-2xl
-                    group-hover:bg-cyan-400/10
+                    blur-3xl
+                    group-hover:bg-cyan-500/20
                     transition
                   "
                 />
 
-
-                {/* ICON */}
-
+                {/* Icon */}
                 <div
-                  className={`
+                  className="
                     relative
                     w-14
                     h-14
                     rounded-2xl
-                    ${item.iconBg}
-                    ${item.iconColor}
-                    flex
-                    items-center
-                    justify-center
-                    mb-5
-                    transition
-                    duration-300
+                    bg-cyan-500/10
+                    border border-cyan-400/20
+                    flex items-center justify-center
+                    text-cyan-400
+                    mb-6
+                    group-hover:bg-cyan-500/20
                     group-hover:scale-110
-                  `}
+                    transition-all
+                    duration-300
+                  "
                 >
                   {item.icon}
                 </div>
 
-
-                {/* TITLE */}
-
-                <h4 className="text-xl font-semibold mb-2">
+                {/* Title */}
+                <h4 className="relative text-xl font-bold mb-3">
                   {item.title}
                 </h4>
 
-
-                {/* DESCRIPTION */}
-
-                <p className="text-slate-400 text-sm leading-relaxed min-h-[48px]">
+                {/* Description */}
+                <p className="relative text-slate-400 leading-relaxed">
                   {item.description}
                 </p>
 
-
-                {/* OPEN */}
-
+                {/* Open Tool */}
                 <div
                   className="
-                    flex
-                    items-center
-                    gap-2
-                    mt-6
-                    text-sm
-                    font-semibold
+                    relative
+                    mt-auto
+                    pt-6
+                    flex items-center gap-2
                     text-cyan-400
-                    group-hover:text-cyan-300
+                    font-semibold
+                    group-hover:gap-3
+                    transition-all
                   "
                 >
                   Open Tool
-
-                  <ArrowRight
-                    size={16}
-                    className="
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-1
-                    "
-                  />
+                  <span className="text-xl">→</span>
                 </div>
 
               </Link>
-
             ))}
 
           </div>
-
         </section>
 
-
-        {/* =========================
-            TODAY'S PROGRESS
-        ========================= */}
-
+        {/* ================= PROGRESS ================= */}
         <section className="mt-10">
 
           <div
             className="
               rounded-3xl
-              border
-              border-white/10
+              border border-white/10
               bg-white/[0.06]
               backdrop-blur-xl
-              p-6
-              md:p-8
+              p-8
             "
           >
 
-            <div className="flex items-center justify-between mb-6">
-
+            <div className="flex justify-between items-center mb-5">
               <div>
-
-                <h3 className="text-xl md:text-2xl font-bold">
+                <h3 className="text-2xl font-bold">
                   📈 Today's Progress
                 </h3>
 
-                <p className="text-slate-400 text-sm mt-1">
-                  Keep going! You're almost there.
+                <p className="text-slate-400 mt-1">
+                  Keep going, you're doing great!
                 </p>
-
               </div>
 
-              <div
-                className="
-                  hidden
-                  sm:block
-                  text-2xl
-                  font-bold
-                  text-cyan-400
-                "
-              >
+              <span className="text-cyan-400 font-bold text-lg">
                 80%
-              </div>
-
+              </span>
             </div>
 
-
-            {/* PROGRESS BAR */}
-
-            <div className="w-full h-4 bg-slate-800/80 rounded-full overflow-hidden">
+            {/* Progress Bar */}
+            <div className="w-full h-4 bg-slate-800 rounded-full overflow-hidden">
 
               <div
                 className="
                   h-full
                   w-[80%]
-                  rounded-full
                   bg-gradient-to-r
                   from-cyan-400
                   to-blue-500
-                  shadow-lg
-                  shadow-cyan-500/20
+                  rounded-full
                   transition-all
+                  duration-500
                 "
               />
 
             </div>
 
-
-            {/* PROGRESS TEXT */}
-
-            <div className="flex justify-between items-center mt-4">
-
-              <p className="text-slate-300 text-sm">
-                You completed{" "}
-                <strong className="text-white">
-                  4 out of 5
-                </strong>{" "}
-                study tasks today.
-              </p>
-
-              <span className="text-xs text-slate-500">
-                1 task remaining
-              </span>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =========================
-            MOTIVATION CARD
-        ========================= */}
-
-        <section className="mt-6">
-
-          <div
-            className="
-              rounded-3xl
-              border
-              border-purple-400/10
-              bg-gradient-to-r
-              from-purple-500/10
-              to-cyan-500/10
-              p-6
-              text-center
-            "
-          >
-
-            <Sparkles
-              size={24}
-              className="mx-auto text-cyan-400 mb-3"
-            />
-
-            <p className="text-slate-200 font-medium">
-              "Small progress every day leads to big results."
-            </p>
-
-            <p className="text-slate-500 text-xs mt-2">
-              Keep learning. Keep growing. 🚀
+            <p className="mt-4 text-slate-300">
+              You completed{" "}
+              <strong className="text-white">
+                4 out of 5
+              </strong>{" "}
+              study tasks today.
             </p>
 
           </div>
@@ -677,21 +355,9 @@ export default function Dashboard() {
 
       </main>
 
-
-      {/* =========================
-          FOOTER
-      ========================= */}
-
-      <footer className="border-t border-white/10 mt-10">
-
-        <div className="max-w-7xl mx-auto px-6 py-6 text-center">
-
-          <p className="text-xs text-slate-500">
-            🎓 AI Study Buddy • Learn smarter, study better
-          </p>
-
-        </div>
-
+      {/* ================= FOOTER ================= */}
+      <footer className="text-center text-slate-500 py-8">
+        © 2026 AI Study Buddy • Learn Smarter with AI
       </footer>
 
     </div>
