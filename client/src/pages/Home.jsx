@@ -4,7 +4,6 @@ import {
   Brain,
   BookOpen,
   CalendarDays,
-  FileText,
   Sparkles,
   ArrowRight,
   CheckCircle2,
@@ -39,12 +38,6 @@ export default function Home() {
       description:
         "Create personalized study schedules based on your subjects, exam dates, and available time.",
     },
-    {
-      icon: <FileText size={28} />,
-      title: "PDF Summarizer",
-      description:
-        "Upload your PDF study material and let AI convert lengthy content into clear, easy-to-understand summaries.",
-    },
   ];
 
   const benefits = [
@@ -52,7 +45,7 @@ export default function Home() {
       icon: <Zap size={28} />,
       title: "Faster Learning",
       description:
-        "Understand difficult concepts quickly with AI-powered explanations and summaries.",
+        "Understand difficult concepts quickly with AI-powered explanations.",
     },
     {
       icon: <Target size={28} />,
@@ -75,7 +68,6 @@ export default function Home() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-          {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
               <Sparkles size={23} />
@@ -92,7 +84,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Navigation */}
           <div className="flex items-center gap-3">
             <Link
               to="/login"
@@ -115,18 +106,15 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden">
 
-        {/* Background Glow */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
 
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-sm font-medium mb-7">
             <Sparkles size={16} />
             AI-Powered Learning Platform
           </div>
 
-          {/* Heading */}
           <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
             Study Smarter.
             <br />
@@ -136,14 +124,12 @@ export default function Home() {
             </span>
           </h2>
 
-          {/* Description */}
           <p className="max-w-3xl mx-auto mt-7 text-lg md:text-xl text-slate-300 leading-relaxed">
             Your intelligent learning companion that helps you understand
-            concepts, practice effectively, summarize study materials,
-            organize your studies, and prepare smarter with AI.
+            concepts, practice effectively, organize your studies, and
+            prepare smarter with AI.
           </p>
 
-          {/* Buttons */}
           <div className="flex justify-center gap-4 flex-wrap mt-10">
 
             <Link
@@ -167,7 +153,6 @@ export default function Home() {
 
           </div>
 
-          {/* Features Highlights */}
           <div className="flex justify-center gap-10 mt-12 flex-wrap text-sm">
 
             <div className="flex items-center gap-2 text-slate-300">
@@ -211,48 +196,30 @@ export default function Home() {
 
         </div>
 
-        {/* Feature Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
           {features.map((feature, index) => (
-
             <div
               key={index}
               className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-cyan-400/20 hover:-translate-y-1 transition-all duration-300"
             >
 
-              {/* Icon */}
               <div className="w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition">
                 {feature.icon}
               </div>
 
-              {/* Title */}
               <h3 className="text-xl font-bold mb-3">
                 {feature.title}
               </h3>
 
-              {/* Description */}
               <p className="text-slate-400 leading-relaxed">
                 {feature.description}
               </p>
 
-              {/* PDF Summarizer Link */}
-              {feature.title === "PDF Summarizer" && (
-                <Link
-                  to="/summarizer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm text-cyan-400 font-semibold hover:text-cyan-300 transition"
-                >
-                  Open Tool
-                  <ArrowRight size={16} />
-                </Link>
-              )}
-
             </div>
-
           ))}
 
         </div>
-
       </section>
 
       {/* ================= BENEFITS ================= */}
@@ -260,7 +227,6 @@ export default function Home() {
 
         <div className="relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12">
 
-          {/* Background Glow */}
           <div className="absolute right-0 top-0 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl" />
 
           <div className="relative">
@@ -280,7 +246,6 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-8">
 
               {benefits.map((benefit, index) => (
-
                 <div
                   key={index}
                   className="text-center"
@@ -299,15 +264,12 @@ export default function Home() {
                   </p>
 
                 </div>
-
               ))}
 
             </div>
 
           </div>
-
         </div>
-
       </section>
 
       {/* ================= CTA ================= */}
@@ -341,9 +303,7 @@ export default function Home() {
             </Link>
 
           </div>
-
         </div>
-
       </section>
 
       {/* ================= FOOTER ================= */}
@@ -367,7 +327,6 @@ export default function Home() {
           </p>
 
         </div>
-
       </footer>
 
     </div>
