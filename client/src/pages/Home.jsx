@@ -108,6 +108,7 @@ export default function Home() {
               Get Started
             </Link>
           </div>
+
         </div>
       </nav>
 
@@ -166,7 +167,7 @@ export default function Home() {
 
           </div>
 
-          {/* Small Stats */}
+          {/* Features Highlights */}
           <div className="flex justify-center gap-10 mt-12 flex-wrap text-sm">
 
             <div className="flex items-center gap-2 text-slate-300">
@@ -181,10 +182,11 @@ export default function Home() {
 
             <div className="flex items-center gap-2 text-slate-300">
               <CheckCircle2 size={18} className="text-cyan-400" />
-              PDF summarization
+              Smart revision
             </div>
 
           </div>
+
         </div>
       </section>
 
@@ -213,6 +215,7 @@ export default function Home() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {features.map((feature, index) => (
+
             <div
               key={index}
               className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-cyan-400/20 hover:-translate-y-1 transition-all duration-300"
@@ -233,21 +236,23 @@ export default function Home() {
                 {feature.description}
               </p>
 
-              {/* PDF Button */}
+              {/* PDF Summarizer Link */}
               {feature.title === "PDF Summarizer" && (
                 <Link
                   to="/summarizer"
                   className="mt-6 inline-flex items-center gap-2 text-sm text-cyan-400 font-semibold hover:text-cyan-300 transition"
                 >
-                  Try PDF Summarizer
+                  Open Tool
                   <ArrowRight size={16} />
                 </Link>
               )}
 
             </div>
+
           ))}
 
         </div>
+
       </section>
 
       {/* ================= BENEFITS ================= */}
@@ -275,6 +280,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-8">
 
               {benefits.map((benefit, index) => (
+
                 <div
                   key={index}
                   className="text-center"
@@ -293,11 +299,15 @@ export default function Home() {
                   </p>
 
                 </div>
+
               ))}
 
             </div>
+
           </div>
+
         </div>
+
       </section>
 
       {/* ================= CTA ================= */}
@@ -331,7 +341,9 @@ export default function Home() {
             </Link>
 
           </div>
+
         </div>
+
       </section>
 
       {/* ================= FOOTER ================= */}
@@ -340,7 +352,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
           <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-cyan-400" />
+            <Sparkles
+              size={18}
+              className="text-cyan-400"
+            />
 
             <span className="font-semibold">
               AI Study Buddy
@@ -352,6 +367,7 @@ export default function Home() {
           </p>
 
         </div>
+
       </footer>
 
     </div>
