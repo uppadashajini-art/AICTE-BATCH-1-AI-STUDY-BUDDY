@@ -5,9 +5,10 @@ import {
   BookOpen,
   CalendarDays,
   LogOut,
-  Flame,
-  Trophy,
   FileText,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -24,38 +25,38 @@ export default function Dashboard() {
   const features = [
     {
       title: "AI Chat",
-      icon: <MessageSquare size={32} />,
+      icon: <MessageSquare size={30} />,
       path: "/chat",
       description:
         "Ask questions and get instant AI-powered explanations for any topic.",
     },
     {
       title: "Generate Quiz",
-      icon: <Brain size={32} />,
+      icon: <Brain size={30} />,
       path: "/quiz",
       description:
-        "Test your knowledge with AI-generated multiple-choice quizzes.",
+        "Test your knowledge with AI-generated quizzes and strengthen your understanding.",
     },
     {
       title: "Flashcards",
-      icon: <BookOpen size={32} />,
+      icon: <BookOpen size={30} />,
       path: "/flashcards",
       description:
-        "Create smart flashcards and revise important concepts quickly.",
+        "Create smart flashcards and revise important concepts quickly and effectively.",
     },
     {
       title: "Study Plan",
-      icon: <CalendarDays size={32} />,
+      icon: <CalendarDays size={30} />,
       path: "/study-plan",
       description:
-        "Create a personalized study schedule based on your exam date.",
+        "Create a personalized study schedule based on your subject, exam date, and available time.",
     },
     {
       title: "PDF Summarizer",
-      icon: <FileText size={32} />,
+      icon: <FileText size={30} />,
       path: "/summarizer",
       description:
-        "Upload your PDF and turn lengthy study material into simple notes.",
+        "Upload study material and turn lengthy PDF documents into easy-to-understand notes.",
     },
   ];
 
@@ -63,34 +64,53 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
 
       {/* ================= NAVBAR ================= */}
-      <nav className="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
 
           {/* Logo */}
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-              <span className="text-2xl">🎓</span>
+          <div className="flex items-center gap-3">
+
+            <div
+              className="
+                w-11 h-11
+                rounded-2xl
+                bg-gradient-to-br
+                from-cyan-400
+                to-blue-600
+                flex
+                items-center
+                justify-center
+                shadow-lg
+                shadow-cyan-500/20
+              "
+            >
+              <span className="text-xl">🎓</span>
             </div>
 
             <div>
-              <h1 className="text-2xl font-bold">
+              <h1 className="text-xl font-bold tracking-tight">
                 AI Study Buddy
               </h1>
 
-              <p className="text-sm text-slate-400">
+              <p className="text-xs text-slate-400">
                 Learn smarter. Study better.
               </p>
             </div>
+
           </div>
 
           {/* Logout */}
           <button
             onClick={handleLogout}
             className="
-              flex items-center gap-2
-              px-5 py-2.5
+              flex
+              items-center
+              gap-2
+              px-4
+              py-2
               rounded-xl
-              border border-red-400/20
+              border
+              border-red-400/20
               bg-red-500/10
               text-red-400
               hover:bg-red-500
@@ -99,106 +119,206 @@ export default function Dashboard() {
               duration-300
             "
           >
-            <LogOut size={18} />
-            Logout
+            <LogOut size={17} />
+            <span className="hidden sm:inline">Logout</span>
           </button>
+
         </div>
       </nav>
 
       {/* ================= MAIN ================= */}
       <main className="max-w-6xl mx-auto px-6 py-10">
 
-        {/* Welcome */}
+        {/* ================= HERO SECTION ================= */}
         <section
           className="
-            mb-10
+            relative
+            overflow-hidden
             rounded-3xl
-            border border-white/10
-            bg-white/[0.06]
+            border
+            border-white/10
+            bg-gradient-to-br
+            from-white/[0.08]
+            to-white/[0.03]
             backdrop-blur-xl
             p-8
+            md:p-10
             shadow-2xl
+            mb-12
           "
         >
-          <h2 className="text-4xl font-bold">
-            Welcome Back 👋
-          </h2>
 
-          <p className="text-slate-300 mt-3 text-lg max-w-3xl">
-            Continue your learning journey with AI-powered tools
-            designed to help you study smarter and stay organized.
-          </p>
+          {/* Background Glow */}
+          <div
+            className="
+              absolute
+              -top-32
+              -right-32
+              w-80
+              h-80
+              bg-cyan-500/10
+              rounded-full
+              blur-3xl
+            "
+          />
 
-          {/* Stats */}
-          <div className="flex flex-wrap gap-4 mt-7">
+          <div
+            className="
+              absolute
+              -bottom-32
+              -left-32
+              w-80
+              h-80
+              bg-indigo-500/10
+              rounded-full
+              blur-3xl
+            "
+          />
 
-            {/* Streak */}
+          <div className="relative">
+
+            {/* Small Badge */}
             <div
               className="
-                flex items-center gap-3
-                px-5 py-3
-                rounded-2xl
-                bg-orange-500/10
-                border border-orange-400/20
+                inline-flex
+                items-center
+                gap-2
+                px-3
+                py-1.5
+                rounded-full
+                bg-cyan-400/10
+                border
+                border-cyan-400/20
+                text-cyan-300
+                text-xs
+                font-semibold
+                mb-5
               "
             >
-              <Flame className="text-orange-400" size={22} />
-
-              <div>
-                <p className="text-sm text-slate-400">
-                  Study Streak
-                </p>
-
-                <p className="font-bold">
-                  7 Days
-                </p>
-              </div>
+              <Sparkles size={14} />
+              AI-Powered Learning
             </div>
 
-            {/* XP */}
-            <div
+            {/* Heading */}
+            <h2
               className="
-                flex items-center gap-3
-                px-5 py-3
-                rounded-2xl
-                bg-yellow-500/10
-                border border-yellow-400/20
+                text-4xl
+                md:text-5xl
+                font-bold
+                tracking-tight
+                leading-tight
               "
             >
-              <Trophy className="text-yellow-400" size={22} />
+              Welcome Back 👋
+            </h2>
 
-              <div>
-                <p className="text-sm text-slate-400">
-                  XP Earned
-                </p>
+            {/* Description */}
+            <p
+              className="
+                text-slate-300
+                mt-4
+                text-base
+                md:text-lg
+                leading-relaxed
+                max-w-3xl
+              "
+            >
+              Continue your learning journey with intelligent tools
+              designed to help you understand concepts, revise faster,
+              and prepare smarter.
+            </p>
 
-                <p className="font-bold">
-                  250 XP
-                </p>
+            {/* Feature Highlights */}
+            <div
+              className="
+                flex
+                flex-wrap
+                gap-x-6
+                gap-y-3
+                mt-7
+                text-sm
+                text-slate-300
+              "
+            >
+
+              <div className="flex items-center gap-2">
+                <CheckCircle2
+                  size={17}
+                  className="text-cyan-400"
+                />
+                AI-powered learning
               </div>
+
+              <div className="flex items-center gap-2">
+                <CheckCircle2
+                  size={17}
+                  className="text-cyan-400"
+                />
+                Personalized study tools
+              </div>
+
+              <div className="flex items-center gap-2">
+                <CheckCircle2
+                  size={17}
+                  className="text-cyan-400"
+                />
+                Learn at your own pace
+              </div>
+
             </div>
 
           </div>
+
         </section>
 
         {/* ================= STUDY TOOLS ================= */}
         <section>
 
+          {/* Section Header */}
           <div className="mb-7">
-            <h3 className="text-3xl font-bold">
-              Study Tools
-            </h3>
 
-            <p className="text-slate-400 mt-2">
-              Everything you need to study smarter.
-            </p>
+            <div className="flex items-center gap-3">
+
+              <div
+                className="
+                  w-10
+                  h-10
+                  rounded-xl
+                  bg-cyan-500/10
+                  border
+                  border-cyan-400/20
+                  flex
+                  items-center
+                  justify-center
+                  text-cyan-400
+                "
+              >
+                <Brain size={21} />
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-bold">
+                  Study Tools
+                </h3>
+
+                <p className="text-slate-400 mt-1">
+                  Everything you need to study smarter.
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
-          {/* IMPORTANT:
-              There are ONLY 5 cards here.
-              Upload Notes has been completely removed.
-          */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Tool Cards */}
+          <div
+            className="
+              grid
+              md:grid-cols-2
+              lg:grid-cols-3
+              gap-6
+            "
+          >
 
             {features.map((item, index) => (
               <Link
@@ -209,13 +329,15 @@ export default function Dashboard() {
                   relative
                   overflow-hidden
                   rounded-3xl
-                  border border-white/10
-                  bg-white/[0.07]
+                  border
+                  border-white/10
+                  bg-white/[0.06]
                   backdrop-blur-xl
                   p-7
-                  min-h-[270px]
-                  flex flex-col
-                  hover:bg-white/[0.11]
+                  min-h-[275px]
+                  flex
+                  flex-col
+                  hover:bg-white/[0.10]
                   hover:border-cyan-400/30
                   hover:-translate-y-2
                   transition-all
@@ -224,19 +346,20 @@ export default function Dashboard() {
                 "
               >
 
-                {/* Glow */}
+                {/* Card Glow */}
                 <div
                   className="
                     absolute
-                    -top-20
-                    -right-20
-                    w-40
-                    h-40
+                    -top-24
+                    -right-24
+                    w-48
+                    h-48
                     bg-cyan-500/10
                     rounded-full
                     blur-3xl
                     group-hover:bg-cyan-500/20
-                    transition
+                    transition-all
+                    duration-300
                   "
                 />
 
@@ -248,8 +371,11 @@ export default function Dashboard() {
                     h-14
                     rounded-2xl
                     bg-cyan-500/10
-                    border border-cyan-400/20
-                    flex items-center justify-center
+                    border
+                    border-cyan-400/20
+                    flex
+                    items-center
+                    justify-center
                     text-cyan-400
                     mb-6
                     group-hover:bg-cyan-500/20
@@ -262,12 +388,26 @@ export default function Dashboard() {
                 </div>
 
                 {/* Title */}
-                <h4 className="relative text-xl font-bold mb-3">
+                <h4
+                  className="
+                    relative
+                    text-xl
+                    font-bold
+                    mb-3
+                  "
+                >
                   {item.title}
                 </h4>
 
                 {/* Description */}
-                <p className="relative text-slate-400 leading-relaxed">
+                <p
+                  className="
+                    relative
+                    text-slate-400
+                    leading-relaxed
+                    text-sm
+                  "
+                >
                   {item.description}
                 </p>
 
@@ -277,76 +417,98 @@ export default function Dashboard() {
                     relative
                     mt-auto
                     pt-6
-                    flex items-center gap-2
+                    flex
+                    items-center
+                    gap-2
                     text-cyan-400
                     font-semibold
+                    text-sm
                     group-hover:gap-3
                     transition-all
                   "
                 >
                   Open Tool
-                  <span className="text-xl">→</span>
+
+                  <ArrowRight
+                    size={18}
+                    className="
+                      group-hover:translate-x-1
+                      transition-transform
+                    "
+                  />
                 </div>
 
               </Link>
             ))}
 
           </div>
+
         </section>
 
-        {/* ================= PROGRESS ================= */}
-        <section className="mt-10">
+        {/* ================= BOTTOM CTA ================= */}
+        <section
+          className="
+            relative
+            overflow-hidden
+            mt-12
+            rounded-3xl
+            border
+            border-cyan-400/10
+            bg-gradient-to-r
+            from-cyan-500/10
+            via-blue-500/10
+            to-indigo-500/10
+            p-8
+            text-center
+          "
+        >
 
+          {/* Glow */}
           <div
             className="
-              rounded-3xl
-              border border-white/10
-              bg-white/[0.06]
-              backdrop-blur-xl
-              p-8
+              absolute
+              inset-0
+              bg-cyan-500/5
+              blur-3xl
             "
-          >
+          />
 
-            <div className="flex justify-between items-center mb-5">
-              <div>
-                <h3 className="text-2xl font-bold">
-                  📈 Today's Progress
-                </h3>
+          <div className="relative">
 
-                <p className="text-slate-400 mt-1">
-                  Keep going, you're doing great!
-                </p>
-              </div>
-
-              <span className="text-cyan-400 font-bold text-lg">
-                80%
-              </span>
+            <div
+              className="
+                inline-flex
+                items-center
+                justify-center
+                w-12
+                h-12
+                rounded-2xl
+                bg-cyan-400/10
+                border
+                border-cyan-400/20
+                text-cyan-400
+                mb-4
+              "
+            >
+              <Sparkles size={22} />
             </div>
 
-            {/* Progress Bar */}
-            <div className="w-full h-4 bg-slate-800 rounded-full overflow-hidden">
+            <h3 className="text-2xl font-bold">
+              Ready to learn something new?
+            </h3>
 
-              <div
-                className="
-                  h-full
-                  w-[80%]
-                  bg-gradient-to-r
-                  from-cyan-400
-                  to-blue-500
-                  rounded-full
-                  transition-all
-                  duration-500
-                "
-              />
-
-            </div>
-
-            <p className="mt-4 text-slate-300">
-              You completed{" "}
-              <strong className="text-white">
-                4 out of 5
-              </strong>{" "}
-              study tasks today.
+            <p
+              className="
+                text-slate-400
+                mt-2
+                max-w-xl
+                mx-auto
+                text-sm
+                leading-relaxed
+              "
+            >
+              Choose any study tool above and let AI help you
+              understand, practice, and revise more effectively.
             </p>
 
           </div>
@@ -356,8 +518,39 @@ export default function Dashboard() {
       </main>
 
       {/* ================= FOOTER ================= */}
-      <footer className="text-center text-slate-500 py-8">
-        © 2026 AI Study Buddy • Learn Smarter with AI
+      <footer
+        className="
+          border-t
+          border-white/10
+          mt-8
+        "
+      >
+
+        <div
+          className="
+            max-w-6xl
+            mx-auto
+            px-6
+            py-7
+            flex
+            flex-col
+            md:flex-row
+            justify-between
+            items-center
+            gap-3
+          "
+        >
+
+          <p className="text-slate-500 text-sm">
+            © 2026 AI Study Buddy
+          </p>
+
+          <p className="text-slate-500 text-sm">
+            Learn smarter with AI ✨
+          </p>
+
+        </div>
+
       </footer>
 
     </div>
