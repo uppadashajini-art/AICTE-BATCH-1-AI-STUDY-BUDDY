@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import API from "../services/api";
 
 function FlashCards() {
@@ -38,10 +40,17 @@ function FlashCards() {
 
       setError(
         err.response?.data?.message ||
-          "Failed to generate flashcards"
+          "Failed to generate flashcards. Please try again."
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      generateCards();
     }
   };
 
@@ -83,11 +92,7 @@ function FlashCards() {
                 setTopic(e.target.value);
                 setError("");
               }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  generateCards();
-                }
-              }}
+              onKeyDown={handleKeyDown}
               style={styles.input}
               disabled={loading}
             />
@@ -130,7 +135,9 @@ function FlashCards() {
         {/* FLASHCARD RESULT */}
         <div style={styles.resultCard}>
 
+          {/* RESULT HEADER */}
           <div style={styles.resultHeader}>
+
             <div>
               <h2 style={styles.resultTitle}>
                 📖 Your Flashcards
@@ -146,6 +153,7 @@ function FlashCards() {
                 ✓ Ready
               </div>
             )}
+
           </div>
 
           <div style={styles.divider}></div>
@@ -153,6 +161,7 @@ function FlashCards() {
           {/* LOADING */}
           {loading && (
             <div style={styles.loadingState}>
+
               <div style={styles.loadingIcon}>
                 🧠
               </div>
@@ -171,12 +180,14 @@ function FlashCards() {
                 <span>●</span>
                 <span>●</span>
               </div>
+
             </div>
           )}
 
           {/* EMPTY */}
           {!loading && !cards && (
             <div style={styles.emptyState}>
+
               <div style={styles.emptyIcon}>
                 📚
               </div>
@@ -189,13 +200,235 @@ function FlashCards() {
                 Enter a topic above and let AI create
                 personalized flashcards for you.
               </p>
+
+              <div style={styles.topicSuggestions}>
+
+                <button
+                  style={styles.suggestion}
+                  onClick={() => setTopic("Java")}
+                >
+                  ☕ Java
+                </button>
+
+                <button
+                  style={styles.suggestion}
+                  onClick={() => setTopic("DBMS")}
+                >
+                  🗄️ DBMS
+                </button>
+
+                <button
+                  style={styles.suggestion}
+                  onClick={() => setTopic("React")}
+                >
+                  ⚛️ React
+                </button>
+
+                <button
+                  style={styles.suggestion}
+                  onClick={() => setTopic("Python")}
+                >
+                  🐍 Python
+                </button>
+
+              </div>
+
             </div>
           )}
 
           {/* RESULTS */}
           {!loading && cards && (
             <div style={styles.cardsContent}>
-              {cards}
+
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+
+                  /* H1 */
+
+                  h1: ({ children }) => (
+                    <h1 style={styles.markdownH1}>
+                      {children}
+                    </h1>
+                  ),
+
+                  /* H2 */
+
+                  h2: ({ children }) => (
+                    <h2 style={styles.markdownH2}>
+                      {children}
+                    </h2>
+                  ),
+
+                  /* H3 */
+
+                  h3: ({ children }) => (
+                    <h3 style={styles.markdownH3}>
+                      {children}
+                    </h3>
+                  ),
+
+                  /* H4 */
+
+                  h4: ({ children }) => (
+                    <h4 style={styles.markdownH4}>
+                      {children}
+                    </h4>
+                  ),
+
+                  /* PARAGRAPH */
+
+                  p: ({ children }) => (
+                    <p style={styles.markdownP}>
+                      {children}
+                    </p>
+                  ),
+
+                  /* UNORDERED LIST */
+
+                  ul: ({ children }) => (
+                    <ul style={styles.markdownUl}>
+                      {children}
+                    </ul>
+                  ),
+
+                  /* ORDERED LIST */
+
+                  ol: ({ children }) => (
+                    <ol style={styles.markdownOl}>
+                      {children}
+                    </ol>
+                  ),
+
+                  /* LIST ITEM */
+
+                  li: ({ children }) => (
+                    <li style={styles.markdownLi}>
+                      {children}
+                    </li>
+                  ),
+
+                  /* BOLD */
+
+                  strong: ({ children }) => (
+                    <strong style={styles.markdownStrong}>
+                      {children}
+                    </strong>
+                  ),
+
+                  /* ITALIC */
+
+                  em: ({ children }) => (
+                    <em style={styles.markdownEm}>
+                      {children}
+                    </em>
+                  ),
+
+                  /* INLINE CODE */
+
+                  code: ({
+                    inline,
+                    children,
+                    ...props
+                  }) => {
+                    return inline ? (
+                      <code
+                        style={styles.inlineCode}
+                        {...props}
+                      >
+                        {children}
+                      </code>
+                    ) : (
+                      <code
+                        style={styles.codeBlockCode}
+                        {...props}
+                      >
+                        {children}
+                      </code>
+                    );
+                  },
+
+                  /* CODE BLOCK */
+
+                  pre: ({ children }) => (
+                    <pre style={styles.codeBlock}>
+                      {children}
+                    </pre>
+                  ),
+
+                  /* BLOCKQUOTE */
+
+                  blockquote: ({ children }) => (
+                    <blockquote
+                      style={styles.blockquote}
+                    >
+                      {children}
+                    </blockquote>
+                  ),
+
+                  /* HORIZONTAL LINE */
+
+                  hr: () => (
+                    <hr style={styles.horizontalLine} />
+                  ),
+
+                  /* LINKS */
+
+                  a: ({ children, href }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.link}
+                    >
+                      {children}
+                    </a>
+                  ),
+
+                  /* TABLE */
+
+                  table: ({ children }) => (
+                    <div style={styles.tableWrapper}>
+                      <table style={styles.table}>
+                        {children}
+                      </table>
+                    </div>
+                  ),
+
+                  thead: ({ children }) => (
+                    <thead style={styles.thead}>
+                      {children}
+                    </thead>
+                  ),
+
+                  tbody: ({ children }) => (
+                    <tbody>
+                      {children}
+                    </tbody>
+                  ),
+
+                  tr: ({ children }) => (
+                    <tr style={styles.tableRow}>
+                      {children}
+                    </tr>
+                  ),
+
+                  th: ({ children }) => (
+                    <th style={styles.tableHeader}>
+                      {children}
+                    </th>
+                  ),
+
+                  td: ({ children }) => (
+                    <td style={styles.tableCell}>
+                      {children}
+                    </td>
+                  ),
+                }}
+              >
+                {cards}
+              </ReactMarkdown>
+
             </div>
           )}
 
@@ -212,6 +445,9 @@ function FlashCards() {
 }
 
 const styles = {
+
+  /* PAGE */
+
   page: {
     minHeight: "100vh",
     width: "100%",
@@ -379,8 +615,7 @@ const styles = {
 
     fontSize: "12px",
 
-    margin:
-      "12px 0 0",
+    margin: "12px 0 0",
   },
 
   /* ERROR */
@@ -476,8 +711,7 @@ const styles = {
     background:
       "rgba(255,255,255,0.08)",
 
-    margin:
-      "18px 0",
+    margin: "18px 0",
   },
 
   /* EMPTY */
@@ -518,6 +752,36 @@ const styles = {
     fontSize: "14px",
 
     lineHeight: "1.6",
+  },
+
+  topicSuggestions: {
+    display: "flex",
+
+    flexWrap: "wrap",
+
+    justifyContent: "center",
+
+    gap: "9px",
+
+    marginTop: "18px",
+  },
+
+  suggestion: {
+    padding: "9px 14px",
+
+    borderRadius: "11px",
+
+    border:
+      "1px solid rgba(255,255,255,0.1)",
+
+    background:
+      "rgba(255,255,255,0.06)",
+
+    color: "#dbeafe",
+
+    cursor: "pointer",
+
+    fontSize: "13px",
   },
 
   /* LOADING */
@@ -566,32 +830,264 @@ const styles = {
     fontSize: "10px",
   },
 
-  /* CONTENT */
+  /* MARKDOWN CONTENT */
 
   cardsContent: {
     minHeight: "330px",
 
-    whiteSpace: "pre-wrap",
+    padding: "20px",
+
+    borderRadius: "14px",
+
+    background:
+      "rgba(0,0,0,0.15)",
+
+    border:
+      "1px solid rgba(255,255,255,0.06)",
 
     color: "#e5e7eb",
 
     fontSize: "15px",
 
-    lineHeight: "1.8",
-
-    background:
-      "rgba(0,0,0,0.15)",
-
-    borderRadius: "14px",
-
-    padding: "20px",
-
-    border:
-      "1px solid rgba(255,255,255,0.06)",
+    lineHeight: "1.7",
 
     overflowX: "auto",
 
     boxSizing: "border-box",
+  },
+
+  /* HEADINGS */
+
+  markdownH1: {
+    fontSize: "25px",
+
+    fontWeight: "700",
+
+    color: "#ffffff",
+
+    margin: "5px 0 18px",
+
+    paddingBottom: "10px",
+
+    borderBottom:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  markdownH2: {
+    fontSize: "21px",
+
+    fontWeight: "700",
+
+    color: "#ffffff",
+
+    margin: "22px 0 12px",
+  },
+
+  markdownH3: {
+    fontSize: "18px",
+
+    fontWeight: "700",
+
+    color: "#c7d2fe",
+
+    margin: "18px 0 10px",
+  },
+
+  markdownH4: {
+    fontSize: "16px",
+
+    fontWeight: "600",
+
+    color: "#ddd6fe",
+
+    margin: "15px 0 8px",
+  },
+
+  /* PARAGRAPHS */
+
+  markdownP: {
+    margin: "0 0 13px",
+
+    lineHeight: "1.75",
+  },
+
+  /* LISTS */
+
+  markdownUl: {
+    margin: "10px 0 16px",
+
+    paddingLeft: "25px",
+  },
+
+  markdownOl: {
+    margin: "10px 0 16px",
+
+    paddingLeft: "28px",
+  },
+
+  markdownLi: {
+    marginBottom: "8px",
+
+    paddingLeft: "4px",
+
+    lineHeight: "1.65",
+  },
+
+  /* BOLD */
+
+  markdownStrong: {
+    color: "#ffffff",
+
+    fontWeight: "700",
+  },
+
+  /* ITALIC */
+
+  markdownEm: {
+    color: "#c4b5fd",
+  },
+
+  /* INLINE CODE */
+
+  inlineCode: {
+    background:
+      "rgba(0,0,0,0.4)",
+
+    color: "#c4b5fd",
+
+    padding: "3px 7px",
+
+    borderRadius: "5px",
+
+    fontFamily:
+      "Consolas, Monaco, 'Courier New', monospace",
+
+    fontSize: "13px",
+  },
+
+  /* CODE BLOCK */
+
+  codeBlock: {
+    background: "#080c18",
+
+    padding: "16px",
+
+    borderRadius: "11px",
+
+    overflowX: "auto",
+
+    margin: "15px 0",
+
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+
+    boxShadow:
+      "inset 0 0 20px rgba(0,0,0,0.25)",
+  },
+
+  codeBlockCode: {
+    fontFamily:
+      "Consolas, Monaco, 'Courier New', monospace",
+
+    fontSize: "13px",
+
+    lineHeight: "1.65",
+
+    color: "#e2e8f0",
+
+    whiteSpace: "pre",
+  },
+
+  /* BLOCKQUOTE */
+
+  blockquote: {
+    margin: "15px 0",
+
+    padding: "12px 16px",
+
+    borderLeft:
+      "4px solid #6366f1",
+
+    background:
+      "rgba(99,102,241,0.08)",
+
+    color: "#cbd5e1",
+
+    borderRadius:
+      "0 8px 8px 0",
+  },
+
+  /* LINKS */
+
+  link: {
+    color: "#93c5fd",
+
+    textDecoration: "underline",
+  },
+
+  /* HORIZONTAL LINE */
+
+  horizontalLine: {
+    border: "none",
+
+    borderTop:
+      "1px solid rgba(255,255,255,0.1)",
+
+    margin: "20px 0",
+  },
+
+  /* TABLE */
+
+  tableWrapper: {
+    width: "100%",
+
+    overflowX: "auto",
+
+    margin: "16px 0",
+  },
+
+  table: {
+    width: "100%",
+
+    borderCollapse: "collapse",
+
+    fontSize: "13px",
+
+    minWidth: "500px",
+  },
+
+  thead: {
+    background:
+      "rgba(99,102,241,0.18)",
+  },
+
+  tableRow: {
+    borderBottom:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableHeader: {
+    padding: "11px 13px",
+
+    textAlign: "left",
+
+    fontWeight: "700",
+
+    color: "#ffffff",
+
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableCell: {
+    padding: "10px 13px",
+
+    color: "#d1d5db",
+
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+
+    lineHeight: "1.5",
   },
 
   /* FOOTER */
