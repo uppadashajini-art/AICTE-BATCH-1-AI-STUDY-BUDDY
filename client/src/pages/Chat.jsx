@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import API from "../services/api";
 
 function Chat() {
@@ -71,6 +73,7 @@ function Chat() {
 
           <div>
             <h1 style={styles.title}>AI Chat Assistant</h1>
+
             <p style={styles.subtitle}>
               Ask questions, understand concepts, and learn smarter.
             </p>
@@ -121,7 +124,9 @@ function Chat() {
                 <button
                   style={styles.suggestion}
                   onClick={() =>
-                    setMessage("Give me some Java interview questions")
+                    setMessage(
+                      "Give me some Java interview questions"
+                    )
                   }
                 >
                   🎯 Java Interview Questions
@@ -143,51 +148,251 @@ function Chat() {
                       : "flex-start",
                 }}
               >
+
                 {/* AI ICON */}
                 {c.role === "ai" && (
-                  <div style={styles.smallAiIcon}>🤖</div>
+                  <div style={styles.smallAiIcon}>
+                    🤖
+                  </div>
                 )}
 
+                {/* MESSAGE */}
                 <div
                   style={{
                     ...styles.msg,
+
                     background:
                       c.role === "user"
                         ? "linear-gradient(135deg, #2563eb, #4f46e5)"
                         : "rgba(255,255,255,0.08)",
+
                     color:
                       c.role === "user"
                         ? "#ffffff"
                         : "#e5e7eb",
+
                     border:
                       c.role === "ai"
                         ? "1px solid rgba(255,255,255,0.1)"
                         : "none",
+
                     borderBottomRightRadius:
-                      c.role === "user" ? "4px" : "16px",
+                      c.role === "user"
+                        ? "4px"
+                        : "16px",
+
                     borderBottomLeftRadius:
-                      c.role === "ai" ? "4px" : "16px",
+                      c.role === "ai"
+                        ? "4px"
+                        : "16px",
                   }}
                 >
-                  {c.text}
+
+                  {/* USER MESSAGE */}
+                  {c.role === "user" ? (
+                    c.text
+                  ) : (
+
+                    /* AI MARKDOWN MESSAGE */
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+
+                        /* HEADINGS */
+
+                        h1: ({ children }) => (
+                          <h1 style={styles.markdownH1}>
+                            {children}
+                          </h1>
+                        ),
+
+                        h2: ({ children }) => (
+                          <h2 style={styles.markdownH2}>
+                            {children}
+                          </h2>
+                        ),
+
+                        h3: ({ children }) => (
+                          <h3 style={styles.markdownH3}>
+                            {children}
+                          </h3>
+                        ),
+
+                        h4: ({ children }) => (
+                          <h4 style={styles.markdownH4}>
+                            {children}
+                          </h4>
+                        ),
+
+                        /* PARAGRAPH */
+
+                        p: ({ children }) => (
+                          <p style={styles.markdownP}>
+                            {children}
+                          </p>
+                        ),
+
+                        /* LISTS */
+
+                        ul: ({ children }) => (
+                          <ul style={styles.markdownUl}>
+                            {children}
+                          </ul>
+                        ),
+
+                        ol: ({ children }) => (
+                          <ol style={styles.markdownOl}>
+                            {children}
+                          </ol>
+                        ),
+
+                        li: ({ children }) => (
+                          <li style={styles.markdownLi}>
+                            {children}
+                          </li>
+                        ),
+
+                        /* TEXT */
+
+                        strong: ({ children }) => (
+                          <strong style={styles.markdownStrong}>
+                            {children}
+                          </strong>
+                        ),
+
+                        em: ({ children }) => (
+                          <em style={styles.markdownEm}>
+                            {children}
+                          </em>
+                        ),
+
+                        /* BLOCKQUOTE */
+
+                        blockquote: ({ children }) => (
+                          <blockquote
+                            style={styles.blockquote}
+                          >
+                            {children}
+                          </blockquote>
+                        ),
+
+                        /* INLINE CODE + CODE BLOCK */
+
+                        code: ({
+                          inline,
+                          className,
+                          children,
+                          ...props
+                        }) => {
+                          return inline ? (
+                            <code
+                              style={styles.inlineCode}
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          ) : (
+                            <code
+                              style={styles.codeBlockCode}
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          );
+                        },
+
+                        pre: ({ children }) => (
+                          <pre style={styles.codeBlock}>
+                            {children}
+                          </pre>
+                        ),
+
+                        /* HORIZONTAL LINE */
+
+                        hr: () => (
+                          <hr style={styles.horizontalLine} />
+                        ),
+
+                        /* LINKS */
+
+                        a: ({ children, href }) => (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={styles.link}
+                          >
+                            {children}
+                          </a>
+                        ),
+
+                        /* TABLE */
+
+                        table: ({ children }) => (
+                          <div style={styles.tableWrapper}>
+                            <table style={styles.table}>
+                              {children}
+                            </table>
+                          </div>
+                        ),
+
+                        thead: ({ children }) => (
+                          <thead style={styles.thead}>
+                            {children}
+                          </thead>
+                        ),
+
+                        tbody: ({ children }) => (
+                          <tbody>{children}</tbody>
+                        ),
+
+                        tr: ({ children }) => (
+                          <tr style={styles.tableRow}>
+                            {children}
+                          </tr>
+                        ),
+
+                        th: ({ children }) => (
+                          <th style={styles.tableHeader}>
+                            {children}
+                          </th>
+                        ),
+
+                        td: ({ children }) => (
+                          <td style={styles.tableCell}>
+                            {children}
+                          </td>
+                        ),
+                      }}
+                    >
+                      {c.text}
+                    </ReactMarkdown>
+                  )}
+
                 </div>
 
                 {/* USER ICON */}
                 {c.role === "user" && (
-                  <div style={styles.smallUserIcon}>👤</div>
+                  <div style={styles.smallUserIcon}>
+                    👤
+                  </div>
                 )}
+
               </div>
             ))}
 
             {/* TYPING INDICATOR */}
             {loading && (
               <div style={styles.messageRow}>
-                <div style={styles.smallAiIcon}>🤖</div>
+                <div style={styles.smallAiIcon}>
+                  🤖
+                </div>
 
                 <div style={styles.typingBubble}>
                   <span style={styles.dot}>●</span>
                   <span style={styles.dot}>●</span>
                   <span style={styles.dot}>●</span>
+
                   <span style={styles.typingText}>
                     AI is thinking...
                   </span>
@@ -211,7 +416,9 @@ function Chat() {
                 type="text"
                 placeholder="Ask your AI study assistant..."
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) =>
+                  setMessage(e.target.value)
+                }
                 onKeyDown={handleKeyDown}
                 disabled={loading}
                 style={styles.input}
@@ -220,15 +427,22 @@ function Chat() {
               <span style={styles.enterHint}>
                 Enter ↵
               </span>
+
             </div>
 
             <button
               onClick={sendMessage}
-              disabled={loading || !message.trim()}
+              disabled={
+                loading || !message.trim()
+              }
               style={{
                 ...styles.button,
+
                 opacity:
-                  loading || !message.trim() ? 0.5 : 1,
+                  loading || !message.trim()
+                    ? 0.5
+                    : 1,
+
                 cursor:
                   loading || !message.trim()
                     ? "not-allowed"
@@ -240,7 +454,8 @@ function Chat() {
           </div>
 
           <p style={styles.footerText}>
-            AI Study Buddy can make mistakes. Verify important information.
+            AI Study Buddy can make mistakes. Verify
+            important information.
           </p>
 
         </div>
@@ -250,6 +465,9 @@ function Chat() {
 }
 
 const styles = {
+
+  /* PAGE */
+
   page: {
     minHeight: "100vh",
     background:
@@ -308,7 +526,8 @@ const styles = {
     gap: "7px",
     padding: "7px 12px",
     borderRadius: "20px",
-    background: "rgba(34,197,94,0.1)",
+    background:
+      "rgba(34,197,94,0.1)",
     color: "#86efac",
     fontSize: "13px",
     border:
@@ -326,7 +545,8 @@ const styles = {
   /* CHAT CARD */
 
   chatCard: {
-    background: "rgba(255,255,255,0.06)",
+    background:
+      "rgba(255,255,255,0.06)",
     border:
       "1px solid rgba(255,255,255,0.1)",
     borderRadius: "22px",
@@ -405,15 +625,187 @@ const styles = {
   },
 
   msg: {
-    maxWidth: "72%",
+    maxWidth: "85%",
     padding: "12px 16px",
     borderRadius: "16px",
     fontSize: "14px",
-    lineHeight: "1.5",
+    lineHeight: "1.6",
     wordBreak: "break-word",
     boxShadow:
       "0 4px 15px rgba(0,0,0,0.12)",
   },
+
+  /* MARKDOWN */
+
+  markdownH1: {
+    fontSize: "23px",
+    fontWeight: "700",
+    margin: "5px 0 14px",
+    color: "#ffffff",
+    lineHeight: "1.3",
+  },
+
+  markdownH2: {
+    fontSize: "20px",
+    fontWeight: "700",
+    margin: "18px 0 10px",
+    color: "#ffffff",
+    lineHeight: "1.35",
+  },
+
+  markdownH3: {
+    fontSize: "17px",
+    fontWeight: "600",
+    margin: "15px 0 8px",
+    color: "#c7d2fe",
+    lineHeight: "1.4",
+  },
+
+  markdownH4: {
+    fontSize: "15px",
+    fontWeight: "600",
+    margin: "12px 0 7px",
+    color: "#ddd6fe",
+  },
+
+  markdownP: {
+    margin: "0 0 12px",
+    lineHeight: "1.7",
+  },
+
+  markdownUl: {
+    margin: "8px 0 14px",
+    paddingLeft: "24px",
+  },
+
+  markdownOl: {
+    margin: "8px 0 14px",
+    paddingLeft: "24px",
+  },
+
+  markdownLi: {
+    marginBottom: "6px",
+    lineHeight: "1.6",
+    paddingLeft: "3px",
+  },
+
+  markdownStrong: {
+    color: "#ffffff",
+    fontWeight: "700",
+  },
+
+  markdownEm: {
+    color: "#c4b5fd",
+  },
+
+  /* INLINE CODE */
+
+  inlineCode: {
+    background:
+      "rgba(0,0,0,0.4)",
+    padding: "3px 7px",
+    borderRadius: "5px",
+    fontFamily:
+      "Consolas, Monaco, monospace",
+    fontSize: "13px",
+    color: "#c4b5fd",
+  },
+
+  /* CODE BLOCK */
+
+  codeBlock: {
+    background: "#080c18",
+    padding: "15px",
+    borderRadius: "10px",
+    overflowX: "auto",
+    margin: "14px 0",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+    boxShadow:
+      "inset 0 0 20px rgba(0,0,0,0.2)",
+  },
+
+  codeBlockCode: {
+    fontFamily:
+      "Consolas, Monaco, 'Courier New', monospace",
+    fontSize: "13px",
+    lineHeight: "1.65",
+    color: "#e2e8f0",
+    whiteSpace: "pre",
+  },
+
+  /* BLOCKQUOTE */
+
+  blockquote: {
+    margin: "12px 0",
+    padding: "10px 15px",
+    borderLeft:
+      "4px solid #6366f1",
+    background:
+      "rgba(99,102,241,0.08)",
+    color: "#cbd5e1",
+    borderRadius: "0 8px 8px 0",
+  },
+
+  /* LINKS */
+
+  link: {
+    color: "#93c5fd",
+    textDecoration: "underline",
+  },
+
+  /* HORIZONTAL LINE */
+
+  horizontalLine: {
+    border: "none",
+    borderTop:
+      "1px solid rgba(255,255,255,0.12)",
+    margin: "18px 0",
+  },
+
+  /* TABLE */
+
+  tableWrapper: {
+    width: "100%",
+    overflowX: "auto",
+    margin: "14px 0",
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    fontSize: "13px",
+    minWidth: "450px",
+  },
+
+  thead: {
+    background:
+      "rgba(99,102,241,0.18)",
+  },
+
+  tableRow: {
+    borderBottom:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableHeader: {
+    padding: "10px 12px",
+    textAlign: "left",
+    fontWeight: "700",
+    color: "#ffffff",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableCell: {
+    padding: "9px 12px",
+    color: "#d1d5db",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+    lineHeight: "1.5",
+  },
+
+  /* ICONS */
 
   smallAiIcon: {
     width: "32px",
@@ -449,13 +841,15 @@ const styles = {
     gap: "5px",
     padding: "12px 15px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.08)",
+    background:
+      "rgba(255,255,255,0.08)",
     color: "#a5b4fc",
   },
 
   dot: {
     fontSize: "8px",
-    animation: "pulse 1.2s infinite",
+    animation:
+      "pulse 1.2s infinite",
   },
 
   typingText: {
@@ -479,7 +873,8 @@ const styles = {
   input: {
     width: "100%",
     boxSizing: "border-box",
-    padding: "15px 75px 15px 17px",
+    padding:
+      "15px 75px 15px 17px",
     borderRadius: "14px",
     border:
       "1px solid rgba(255,255,255,0.12)",
@@ -494,7 +889,8 @@ const styles = {
     position: "absolute",
     right: "14px",
     top: "50%",
-    transform: "translateY(-50%)",
+    transform:
+      "translateY(-50%)",
     color: "#818cf8",
     fontSize: "11px",
   },
@@ -519,7 +915,8 @@ const styles = {
     marginTop: "12px",
     padding: "10px 14px",
     borderRadius: "10px",
-    background: "rgba(239,68,68,0.1)",
+    background:
+      "rgba(239,68,68,0.1)",
     border:
       "1px solid rgba(239,68,68,0.2)",
     color: "#fca5a5",
