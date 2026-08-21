@@ -4,30 +4,62 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import authRoutes from "./routes/authRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js"; // ✅ IMPORTANT ADD
+import aiRoutes from "./routes/aiRoutes.js";
+import summaryRoutes from "./routes/summaryRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors({ origin: "*" }));
+// ================================
+// MIDDLEWARE
+// ================================
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
 app.use(express.json());
 
-// Routes
+// ================================
+// TEST ROUTE
+// ================================
+
 app.get("/", (req, res) => {
   res.send("API working");
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/ai", aiRoutes); // ✅ THIS FIXES YOUR 404
+// ================================
+// ROUTES
+// ================================
 
-// DB
+app.use("/api/auth", authRoutes);
+
+app.use("/api/ai", aiRoutes);
+
+app.use("/api/summary", summaryRoutes);
+
+// ================================
+// DATABASE
+// ================================
+
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((err) => {
+    console.log("MongoDB Error:", err);
+  });
 
-// Server
+// ================================
+// SERVER
+// ================================
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server running"));
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
