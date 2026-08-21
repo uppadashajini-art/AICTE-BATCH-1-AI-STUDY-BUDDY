@@ -1,8 +1,10 @@
-import pdf from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 
 const extractText = async (buffer) => {
-  const data = await pdf(buffer);
-  return data.text;
+  const parser = new PDFParse({ data: buffer });
+  const result = await parser.getText();
+  await parser.destroy();
+  return result.text;
 };
 
 export default extractText;
