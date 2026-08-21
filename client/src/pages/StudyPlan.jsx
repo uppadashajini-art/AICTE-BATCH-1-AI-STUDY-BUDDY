@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import API from "../services/api";
 
 function StudyPlan() {
@@ -25,6 +27,8 @@ function StudyPlan() {
         hoursPerDay,
       });
 
+      console.log("STUDY PLAN API RESPONSE:", res.data);
+
       const data = res.data?.plan ?? res.data;
 
       setPlan(
@@ -41,7 +45,7 @@ function StudyPlan() {
 
       setError(
         err.response?.data?.message ||
-          "Failed to generate study plan"
+          "Failed to generate study plan. Please try again."
       );
     } finally {
       setLoading(false);
@@ -59,7 +63,8 @@ function StudyPlan() {
     <div style={styles.page}>
       <div style={styles.container}>
 
-        {/* HEADER */}
+        {/* ================= HEADER ================= */}
+
         <div style={styles.header}>
           <div style={styles.iconBox}>
             📘
@@ -71,13 +76,13 @@ function StudyPlan() {
             </h1>
 
             <p style={styles.subtitle}>
-              Create a smart, personalized study schedule
-              with AI.
+              Create a smart, personalized study schedule with AI.
             </p>
           </div>
         </div>
 
-        {/* PLANNER CARD */}
+        {/* ================= PLANNER CARD ================= */}
+
         <div style={styles.plannerCard}>
 
           <div style={styles.sectionTitle}>
@@ -85,6 +90,7 @@ function StudyPlan() {
           </div>
 
           {/* SUBJECT */}
+
           <div style={styles.field}>
             <label style={styles.label}>
               📚 Subject
@@ -105,6 +111,7 @@ function StudyPlan() {
           </div>
 
           {/* DATE + HOURS */}
+
           <div style={styles.row}>
 
             <div style={styles.field}>
@@ -115,6 +122,7 @@ function StudyPlan() {
               <input
                 type="date"
                 value={examDate}
+                min={new Date().toISOString().split("T")[0]}
                 onChange={(e) => {
                   setExamDate(e.target.value);
                   setError("");
@@ -147,6 +155,7 @@ function StudyPlan() {
           </div>
 
           {/* QUICK SUBJECTS */}
+
           <div style={styles.quickSection}>
             <span style={styles.quickLabel}>
               Quick topics:
@@ -185,9 +194,20 @@ function StudyPlan() {
             >
               💻 OS
             </button>
+
+            <button
+              style={styles.quickButton}
+              onClick={() =>
+                setSubject("Computer Networks")
+              }
+              disabled={loading}
+            >
+              🌐 CN
+            </button>
           </div>
 
           {/* GENERATE BUTTON */}
+
           <button
             onClick={generatePlan}
             disabled={
@@ -218,17 +238,18 @@ function StudyPlan() {
               ? "⏳ Creating Your Plan..."
               : "🚀 Generate Study Plan"}
           </button>
-
         </div>
 
-        {/* ERROR */}
+        {/* ================= ERROR ================= */}
+
         {error && (
           <div style={styles.error}>
             ⚠️ {error}
           </div>
         )}
 
-        {/* OUTPUT CARD */}
+        {/* ================= OUTPUT CARD ================= */}
+
         <div style={styles.outputCard}>
 
           <div style={styles.outputHeader}>
@@ -251,9 +272,11 @@ function StudyPlan() {
 
           <div style={styles.divider}></div>
 
-          {/* EMPTY STATE */}
+          {/* ================= EMPTY STATE ================= */}
+
           {!loading && !plan && (
             <div style={styles.emptyState}>
+
               <div style={styles.emptyIcon}>
                 📅
               </div>
@@ -269,27 +292,37 @@ function StudyPlan() {
               </p>
 
               <div style={styles.featureRow}>
+
                 <div style={styles.feature}>
-                  <span>📚</span>
+                  <span style={styles.featureIcon}>
+                    📚
+                  </span>
                   <p>Topic Planning</p>
                 </div>
 
                 <div style={styles.feature}>
-                  <span>⏰</span>
+                  <span style={styles.featureIcon}>
+                    ⏰
+                  </span>
                   <p>Time Management</p>
                 </div>
 
                 <div style={styles.feature}>
-                  <span>🎯</span>
+                  <span style={styles.featureIcon}>
+                    🎯
+                  </span>
                   <p>Exam Focus</p>
                 </div>
+
               </div>
             </div>
           )}
 
-          {/* LOADING */}
+          {/* ================= LOADING ================= */}
+
           {loading && (
             <div style={styles.loadingState}>
+
               <div style={styles.loadingIcon}>
                 🧠
               </div>
@@ -308,19 +341,204 @@ function StudyPlan() {
                 <span>●</span>
                 <span>●</span>
               </div>
+
             </div>
           )}
 
-          {/* PLAN */}
+          {/* ================= PLAN OUTPUT ================= */}
+
           {!loading && plan && (
             <div style={styles.planContent}>
-              {plan}
+
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+
+                  /* H1 */
+
+                  h1: ({ children }) => (
+                    <h1 style={styles.markdownH1}>
+                      {children}
+                    </h1>
+                  ),
+
+                  /* H2 */
+
+                  h2: ({ children }) => (
+                    <h2 style={styles.markdownH2}>
+                      {children}
+                    </h2>
+                  ),
+
+                  /* H3 */
+
+                  h3: ({ children }) => (
+                    <h3 style={styles.markdownH3}>
+                      {children}
+                    </h3>
+                  ),
+
+                  /* PARAGRAPH */
+
+                  p: ({ children }) => (
+                    <p style={styles.markdownP}>
+                      {children}
+                    </p>
+                  ),
+
+                  /* BULLET LIST */
+
+                  ul: ({ children }) => (
+                    <ul style={styles.markdownUl}>
+                      {children}
+                    </ul>
+                  ),
+
+                  /* NUMBERED LIST */
+
+                  ol: ({ children }) => (
+                    <ol style={styles.markdownOl}>
+                      {children}
+                    </ol>
+                  ),
+
+                  /* LIST ITEM */
+
+                  li: ({ children }) => (
+                    <li style={styles.markdownLi}>
+                      {children}
+                    </li>
+                  ),
+
+                  /* BOLD */
+
+                  strong: ({ children }) => (
+                    <strong style={styles.markdownStrong}>
+                      {children}
+                    </strong>
+                  ),
+
+                  /* ITALIC */
+
+                  em: ({ children }) => (
+                    <em style={styles.markdownEm}>
+                      {children}
+                    </em>
+                  ),
+
+                  /* INLINE CODE */
+
+                  code: ({ children, className }) => {
+                    const isCodeBlock =
+                      className?.includes("language-");
+
+                    if (isCodeBlock) {
+                      return (
+                        <code
+                          style={styles.blockCode}
+                        >
+                          {children}
+                        </code>
+                      );
+                    }
+
+                    return (
+                      <code
+                        style={styles.inlineCode}
+                      >
+                        {children}
+                      </code>
+                    );
+                  },
+
+                  /* CODE BLOCK */
+
+                  pre: ({ children }) => (
+                    <pre style={styles.codeBlock}>
+                      {children}
+                    </pre>
+                  ),
+
+                  /* HORIZONTAL LINE */
+
+                  hr: () => (
+                    <hr style={styles.markdownHr} />
+                  ),
+
+                  /* TABLE */
+
+                  table: ({ children }) => (
+                    <div style={styles.tableWrapper}>
+                      <table style={styles.markdownTable}>
+                        {children}
+                      </table>
+                    </div>
+                  ),
+
+                  thead: ({ children }) => (
+                    <thead style={styles.tableHead}>
+                      {children}
+                    </thead>
+                  ),
+
+                  tbody: ({ children }) => (
+                    <tbody>
+                      {children}
+                    </tbody>
+                  ),
+
+                  tr: ({ children }) => (
+                    <tr style={styles.tableRow}>
+                      {children}
+                    </tr>
+                  ),
+
+                  th: ({ children }) => (
+                    <th style={styles.tableHeader}>
+                      {children}
+                    </th>
+                  ),
+
+                  td: ({ children }) => (
+                    <td style={styles.tableCell}>
+                      {children}
+                    </td>
+                  ),
+
+                  /* LINKS */
+
+                  a: ({ children, href }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.link}
+                    >
+                      {children}
+                    </a>
+                  ),
+
+                  /* BLOCKQUOTE */
+
+                  blockquote: ({ children }) => (
+                    <blockquote
+                      style={styles.blockquote}
+                    >
+                      {children}
+                    </blockquote>
+                  ),
+                }}
+              >
+                {plan}
+              </ReactMarkdown>
+
             </div>
           )}
 
         </div>
 
-        {/* FOOTER */}
+        {/* ================= FOOTER ================= */}
+
         <p style={styles.footer}>
           ✨ AI Study Buddy • Plan smarter, learn better
         </p>
@@ -331,6 +549,9 @@ function StudyPlan() {
 }
 
 const styles = {
+
+  /* ================= PAGE ================= */
+
   page: {
     minHeight: "100vh",
     width: "100%",
@@ -349,7 +570,7 @@ const styles = {
     margin: "0 auto",
   },
 
-  /* HEADER */
+  /* ================= HEADER ================= */
 
   header: {
     display: "flex",
@@ -387,7 +608,7 @@ const styles = {
     lineHeight: "1.5",
   },
 
-  /* PLANNER */
+  /* ================= PLANNER ================= */
 
   plannerCard: {
     background:
@@ -482,7 +703,7 @@ const styles = {
       "0 8px 20px rgba(37,99,235,0.3)",
   },
 
-  /* ERROR */
+  /* ================= ERROR ================= */
 
   error: {
     marginTop: "15px",
@@ -496,7 +717,7 @@ const styles = {
     fontSize: "13px",
   },
 
-  /* OUTPUT */
+  /* ================= OUTPUT ================= */
 
   outputCard: {
     marginTop: "22px",
@@ -550,7 +771,7 @@ const styles = {
     margin: "18px 0",
   },
 
-  /* EMPTY */
+  /* ================= EMPTY ================= */
 
   emptyState: {
     minHeight: "330px",
@@ -593,7 +814,11 @@ const styles = {
     fontSize: "12px",
   },
 
-  /* LOADING */
+  featureIcon: {
+    fontSize: "24px",
+  },
+
+  /* ================= LOADING ================= */
 
   loadingState: {
     minHeight: "330px",
@@ -627,25 +852,183 @@ const styles = {
     fontSize: "10px",
   },
 
-  /* PLAN */
+  /* ================= MARKDOWN CONTENT ================= */
 
   planContent: {
-    minHeight: "330px",
-    padding: "20px",
-    borderRadius: "14px",
+    padding: "24px",
+    borderRadius: "16px",
     background:
-      "rgba(0,0,0,0.15)",
+      "rgba(0,0,0,0.18)",
     border:
-      "1px solid rgba(255,255,255,0.06)",
+      "1px solid rgba(255,255,255,0.07)",
     color: "#e5e7eb",
-    whiteSpace: "pre-wrap",
     fontSize: "15px",
-    lineHeight: "1.8",
+    lineHeight: "1.7",
     overflowX: "auto",
     boxSizing: "border-box",
   },
 
-  /* FOOTER */
+  markdownH1: {
+    fontSize: "25px",
+    fontWeight: "700",
+    color: "#ffffff",
+    margin: "5px 0 18px",
+    paddingBottom: "10px",
+    borderBottom:
+      "1px solid rgba(255,255,255,0.1)",
+  },
+
+  markdownH2: {
+    fontSize: "21px",
+    fontWeight: "700",
+    color: "#c7d2fe",
+    margin: "25px 0 12px",
+  },
+
+  markdownH3: {
+    fontSize: "17px",
+    fontWeight: "600",
+    color: "#a5b4fc",
+    margin: "20px 0 9px",
+  },
+
+  markdownP: {
+    margin: "0 0 14px",
+    lineHeight: "1.75",
+  },
+
+  markdownUl: {
+    margin: "8px 0 18px",
+    paddingLeft: "25px",
+  },
+
+  markdownOl: {
+    margin: "8px 0 18px",
+    paddingLeft: "25px",
+  },
+
+  markdownLi: {
+    marginBottom: "8px",
+    paddingLeft: "4px",
+    lineHeight: "1.65",
+  },
+
+  markdownStrong: {
+    color: "#ffffff",
+    fontWeight: "700",
+  },
+
+  markdownEm: {
+    color: "#c4b5fd",
+  },
+
+  /* ================= CODE ================= */
+
+  inlineCode: {
+    background:
+      "rgba(0,0,0,0.4)",
+    color: "#c4b5fd",
+    padding: "3px 7px",
+    borderRadius: "6px",
+    fontFamily:
+      "Consolas, Monaco, monospace",
+    fontSize: "13px",
+  },
+
+  blockCode: {
+    display: "block",
+    fontFamily:
+      "Consolas, Monaco, monospace",
+    color: "#e5e7eb",
+    whiteSpace: "pre",
+  },
+
+  codeBlock: {
+    background: "#080b18",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+    borderRadius: "12px",
+    padding: "16px",
+    margin: "15px 0",
+    overflowX: "auto",
+    fontFamily:
+      "Consolas, Monaco, monospace",
+    fontSize: "13px",
+    lineHeight: "1.6",
+    boxSizing: "border-box",
+  },
+
+  /* ================= TABLE ================= */
+
+  tableWrapper: {
+    width: "100%",
+    overflowX: "auto",
+    margin: "18px 0",
+    borderRadius: "10px",
+  },
+
+  markdownTable: {
+    width: "100%",
+    borderCollapse: "collapse",
+    minWidth: "500px",
+    background:
+      "rgba(255,255,255,0.03)",
+    fontSize: "13px",
+  },
+
+  tableHead: {
+    background:
+      "rgba(99,102,241,0.2)",
+  },
+
+  tableRow: {
+    borderBottom:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableHeader: {
+    padding: "12px 14px",
+    textAlign: "left",
+    color: "#ffffff",
+    fontWeight: "700",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+  },
+
+  tableCell: {
+    padding: "11px 14px",
+    color: "#d1d5db",
+    border:
+      "1px solid rgba(255,255,255,0.08)",
+    verticalAlign: "top",
+  },
+
+  /* ================= OTHER MARKDOWN ================= */
+
+  markdownHr: {
+    border: "none",
+    borderTop:
+      "1px solid rgba(255,255,255,0.1)",
+    margin: "25px 0",
+  },
+
+  link: {
+    color: "#93c5fd",
+    textDecoration: "underline",
+  },
+
+  blockquote: {
+    margin: "18px 0",
+    padding: "12px 18px",
+    borderLeft:
+      "4px solid #6366f1",
+    background:
+      "rgba(99,102,241,0.08)",
+    color: "#cbd5e1",
+    borderRadius: "0 8px 8px 0",
+  },
+
+  /* ================= FOOTER ================= */
 
   footer: {
     textAlign: "center",
